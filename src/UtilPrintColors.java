@@ -18,4 +18,9 @@ public enum UtilPrintColors {
     public String getColor() {
         return color;
     }
+
+    @Override
+    public String toString() {
+        return color;
+    }
 }

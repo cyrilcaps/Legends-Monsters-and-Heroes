@@ -1,4 +1,7 @@
 public class Action {
-    ActionType action;
-    String target;
+    private boolean end;
+
+    public boolean isEnd() {
+        return end;
+    }
 }

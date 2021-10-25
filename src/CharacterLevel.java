@@ -7,6 +7,7 @@ public class CharacterLevel {
         this.level = level;
         this.experience = experience;
         this.nextLevel = calculateNextLevel();
+        processExperience();
     }
 
     public CharacterLevel() {
@@ -25,9 +26,9 @@ public class CharacterLevel {
         return nextLevel;
     }
 
-    public void addExperience(int experience) {
+    public int addExperience(int experience) {
         this.experience += experience;
-        levelUp();
+        return processExperience();
     }
 
     private int calculateNextLevel() {
@@ -42,5 +43,19 @@ public class CharacterLevel {
         level += 1;
         experience -= nextLevel;
         nextLevel = nextLevel + calculateNextLevel();
+    }
+
+    public int processExperience() {
+        int levels = 0;
+        while (canLevelUp()) {
+            levelUp();
+            levels += 1;
+        }
+        return levels;
+    }
+
+    @Override
+    public String toString() {
+        return "Lvl " + level + " (" + experience + "/" + nextLevel + " EXP)";
     }
 }

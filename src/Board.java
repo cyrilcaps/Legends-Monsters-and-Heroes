@@ -1,13 +1,18 @@
+import java.util.ArrayList;
+import java.util.List;
 
-public class Board {
+public class Board <T extends BoardSquare> {
     // board conditions
     private final int size;
-    private final BoardSquare[][] board;
+    private final List<List<T>> board;
 
     public Board(int size) {
         // instantiate board
         this.size = size;
-        board = new BoardSquare[size][size];
+        board = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            board.add(new ArrayList<>());
+        }
 
         // fill with empty squares
         resetBoard();
@@ -19,18 +24,19 @@ public class Board {
 
     public void resetBoard() {
         for (int i = 0; i < size; i++) {
+            board.get(i).clear();
             for (int j = 0; j < size; j++) {
-                setBoardSquare(i, j, new BoardSquare());
+                board.get(i).add(null);
             }
         }
     }
 
-    public BoardSquare getBoardSquare(int x, int y) {
-        return board[x][y];
+    public T getBoardSquare(int x, int y) {
+        return board.get(x).get(y);
     }
 
-    public void setBoardSquare(int x, int y, BoardSquare square) {
-        board[x][y] = square;
+    public void setBoardSquare(int x, int y, T square) {
+        board.get(x).set(y, square);
     }
 
     public boolean isValid(int row, int col) {
@@ -57,20 +63,20 @@ public class Board {
         if (headers) {
             leftBuffer = "  ";
             StringBuilder printRow = new StringBuilder("    ");
-            for (int col = 0; col < board[0].length; col++) {
+            for (int col = 0; col < board.get(0).size(); col++) {
                 printRow.append(col).append("   ");
             }
             System.out.println(printRow);
         }
 
         System.out.println(getFillerRow(size, leftBuffer));
-        for (int i = 0; i < board.length; i++) {
+        for (int i = 0; i < board.size(); i++) {
             StringBuilder printRow = new StringBuilder("| ");
             if (headers) {
                 printRow.insert(0, i + " ");
             }
-            for (int j = 0; j < board[i].length; j++) {
-                printRow.append(board[i][j].toString()).append(" | ");
+            for (int j = 0; j < board.get(i).size(); j++) {
+                printRow.append(getBoardSquare(i, j).toString()).append(" | ");
             }
             System.out.println(printRow);
             System.out.println(getFillerRow(size, leftBuffer));

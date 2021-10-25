@@ -1,4 +1,9 @@
 public class CharacterStats {
+    int health = 100;
+    int maxHealth = 100;
+    int mana;
+    int maxMana;
+
     private int strength;
     private int agility;
     private int dexterity;
@@ -8,22 +13,24 @@ public class CharacterStats {
     private double dexterityGrowth = 1.05;
 
     private int damage;
-    private int dodgeChange;
+    private double dodgeChance;
     private int damageReduction;
 
     public CharacterStats() {
     }
 
-    public CharacterStats(int strength, int agility, int dexterity, double strengthGrowth, double agilityGrowth, double dexterityGrowth) {
+    public CharacterStats(int strength, int agility, int dexterity, int damage, int dodgeChance, int damageReduction) {
         this.strength = strength;
         this.agility = agility;
         this.dexterity = dexterity;
-        this.strengthGrowth = strengthGrowth;
-        this.agilityGrowth = agilityGrowth;
-        this.dexterityGrowth = dexterityGrowth;
+        this.damage = damage;
+        this.dodgeChance = dodgeChance;
+        this.damageReduction = damageReduction;
+
+        processSecondaryStats();
     }
 
-    public CharacterStats(boolean preferStrength, boolean preferAgility, boolean preferDexterity) {
+    public void setPreferences(boolean preferStrength, boolean preferAgility, boolean preferDexterity) {
         if (preferStrength) {
             this.strengthGrowth = 1.1;
         }
@@ -36,8 +43,39 @@ public class CharacterStats {
     }
 
     public void levelUp() {
-        strength *= strengthGrowth;
-        agility *= agilityGrowth;
-        dexterity *= dexterityGrowth;
+        levelUp(1);
+    }
+
+    public void levelUp(int levels) {
+        if (levels > 0) {
+            maxHealth += 100*levels;
+            maxMana *= Math.pow(1.1, levels);
+            health = maxHealth;
+            mana = maxMana;
+
+            strength *= Math.pow(strengthGrowth, levels);
+            agility *= Math.pow(agilityGrowth, levels);
+            dexterity *= Math.pow(dexterityGrowth, levels);
+        }
+    }
+
+    private void processSecondaryStats() {
+        damage = (int) (strength * 0.05);
+        dodgeChance = agility * 0.002;
+        damageReduction = (int) (dexterity * 0.05);
+    }
+
+    @Override
+    public String toString() {
+        return "CharacterStats:{" +
+                "health=" + health +
+                ", mana=" + mana +
+                ", strength=" + strength +
+                ", agility=" + agility +
+                ", dexterity=" + dexterity +
+                ", damage=" + damage +
+                ", dodgeChange=" + dodgeChance +
+                ", damageReduction=" + damageReduction +
+                '}';
     }
 }

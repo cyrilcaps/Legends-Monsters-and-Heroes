@@ -1,7 +1,7 @@
 public class CharacterCurrency {
     int gold;
 
-    public CharacterCurrency() {
+    public CharacterCurrency(int gold) {
     }
 
     public int getGold() {
@@ -18,5 +18,10 @@ public class CharacterCurrency {
         }
         this.gold -= gold;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return gold + "G";
     }
 }

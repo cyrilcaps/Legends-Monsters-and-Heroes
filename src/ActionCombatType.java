@@ -1,4 +1,4 @@
-public enum ActionType {
+public enum ActionCombatType {
     ATTACK,
     USE,
     SPELL
