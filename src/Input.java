@@ -26,7 +26,7 @@ public class Input {
         return keyScan.nextLine();
     }
 
-    public static int getIntWithMenu(List<String> menuOptions, int startIndex) {
+    public static int getIntWithMenu(List<?> menuOptions, int startIndex) {
         StringBuilder menu = new StringBuilder();
         for (int i = 0; i < menuOptions.size(); i++) {
             menu.append("[").append(i + startIndex).append("] ").append(menuOptions.get(i)).append("\n");

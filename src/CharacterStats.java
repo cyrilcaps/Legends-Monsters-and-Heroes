@@ -56,6 +56,8 @@ public class CharacterStats {
             strength *= Math.pow(strengthGrowth, levels);
             agility *= Math.pow(agilityGrowth, levels);
             dexterity *= Math.pow(dexterityGrowth, levels);
+
+            processSecondaryStats();
         }
     }
 

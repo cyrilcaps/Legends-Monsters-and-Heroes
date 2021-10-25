@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class CharacterHero extends Character {
     CharacterHeroType type;
 
@@ -8,8 +10,25 @@ public class CharacterHero extends Character {
         this.type = type;
     }
 
-    public Action action() {
-        return new Action();
+    public ActionCombat action() {
+        while (true) {
+            /*
+                1 - attack with weapon (enemy)
+                2 - open spell selector, attack with spell (enemy)
+                3 - open consumable selector, use consumable (self)
+             */
+            int input = Input.getIntWithMenu(Arrays.asList("ATTACK", "SKILL", "USE"), 1);
+            switch (input) {
+                case (1):
+                    return new ActionCombat(ActionCombatType.ATTACK);
+                case (2):
+                    // skill selector
+                    return new ActionCombat(ActionCombatType.SPELL);
+                case (3):
+                    // consumable selector
+                    return new ActionCombat(ActionCombatType.USE);
+            }
+        }
     }
 
     public void endCombat(int gold, int experience) {
