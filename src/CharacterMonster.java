@@ -7,12 +7,13 @@ public class CharacterMonster extends Character {
         this.type = type;
     }
 
-    public Action action() {
-        return new Action();
+    @Override
+    public int getDamage() {
+        return getStats().getDamage();
     }
 
     @Override
     public String toString() {
-        return getName() + " " + type + " Lvl " + getLevel().getLevel();
+        return getName() + " " + type + " Lvl " + getLevel().getLevel() + " " + getStats();
     }
 }

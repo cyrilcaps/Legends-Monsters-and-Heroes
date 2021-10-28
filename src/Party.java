@@ -55,7 +55,9 @@ public class Party {
                     return new ActionWorld(ActionMapType.QUIT, coordinates);
                 case ("I"):
                     printHereos();
-                    break;
+                    coordinates = new int[2];
+                    Input.getString("Any key to continue...");
+                    return new ActionWorld(ActionMapType.NONE, coordinates);
             }
         }
     }

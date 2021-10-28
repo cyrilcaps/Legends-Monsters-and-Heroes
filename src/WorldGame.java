@@ -28,6 +28,8 @@ public class WorldGame extends Game {
             // action = quit
             if (action.getType().equals(ActionMapType.QUIT)) {
                 return;
+            } else if (action.getType().equals(ActionMapType.QUIT)) {
+
             }
 
             // action = move
@@ -35,7 +37,8 @@ public class WorldGame extends Game {
 
             // resolve new square - empty, fight, or market
             if (valid) {
-                // party(event)
+                MapSquare currentSquare = world.getMapSquare(party.getToken());
+
                 party = turnBasedManager.next();
             }
         }

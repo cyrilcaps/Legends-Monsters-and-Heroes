@@ -26,8 +26,90 @@ public class CharacterStats {
         this.damage = damage;
         this.dodgeChance = dodgeChance;
         this.damageReduction = damageReduction;
+    }
 
-        processSecondaryStats();
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public void setDodgeChance(double dodgeChance) {
+        this.dodgeChance = dodgeChance;
+    }
+
+    public void setDamageReduction(int damageReduction) {
+        this.damageReduction = damageReduction;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public double getStrengthGrowth() {
+        return strengthGrowth;
+    }
+
+    public double getAgilityGrowth() {
+        return agilityGrowth;
+    }
+
+    public double getDexterityGrowth() {
+        return dexterityGrowth;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public double getDodgeChance() {
+        return dodgeChance;
+    }
+
+    public int getDamageReduction() {
+        return damageReduction;
     }
 
     public void setPreferences(boolean preferStrength, boolean preferAgility, boolean preferDexterity) {

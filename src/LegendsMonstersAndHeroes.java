@@ -1,7 +1,7 @@
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class LegendsMonstersAndHeroes {
     public static void start() {
@@ -19,12 +19,18 @@ public class LegendsMonstersAndHeroes {
                 UtilPrintColors.CYAN);
         List<String> colorStrings = colors.stream().map(c -> c + c.name() + UtilPrintColors.RESET)
                 .collect(Collectors.toList());
+        System.out.println("Choose color:");
         int selection = Input.getIntWithMenu(colorStrings, 1);
         UtilPrintColors color  = colors.get(selection - 1);
 
         // init party
         Party party = new Party(symbol, color);
-        party.addHero(GlobalData.getRandomHero());
+
+        int partyCount = -1;
+        do {
+            partyCount = Input.getInt("Insert number of heroes:");
+        } while(partyCount == -1);
+        IntStream.range(0, partyCount).forEach(x -> party.addHero(GlobalData.getRandom(GlobalData.getHeroes())));
 
         // init world
         WorldGame game = new WorldGame();

@@ -72,6 +72,10 @@ public class World {
         }
     }
 
+    public MapSquare getMapSquare(MapToken token) {
+        return map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);
+    }
+
     public boolean move(MapToken token, int newRow, int newCol) {
         // check next square valid
         if(!map.isValid(newRow, newCol)) {

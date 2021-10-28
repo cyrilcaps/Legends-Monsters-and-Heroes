@@ -1,5 +1,5 @@
 public class CharacterEquipment {
-    Equipable mainHand;
+    ItemWeapon mainHand;
     Equipable offHand;
     Equipable armor;
 
@@ -7,7 +7,7 @@ public class CharacterEquipment {
 
     }
 
-    public Equipable getMainHand() {
+    public ItemWeapon getMainHand() {
         return mainHand;
     }
 
@@ -19,10 +19,8 @@ public class CharacterEquipment {
         return armor;
     }
 
-    public void setMainHand(Character character, Equipable mainHand) {
-        this.mainHand.unequip(character);
+    public void setMainHand(ItemWeapon mainHand) {
         this.mainHand = mainHand;
-        mainHand.equip(character, this.mainHand);
     }
 
     public void setOffHand(Character character, Equipable offHand) {

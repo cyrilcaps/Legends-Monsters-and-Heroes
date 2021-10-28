@@ -4,4 +4,4 @@ Strength_Potion 200     1   75		Strength
 Magic_Potion    350     2   100		Mana
 Luck_Elixir     500     4   65  	Agility
 Mermaid_Tears   850     5   100  	Health/Mana/Strength/Agility
-Ambrosia        1000    8   150		All Health/Mana/Strength/Dexterity/Defense/Agility
+Ambrosia        1000    8   150		Health/Mana/Strength/Agility/Dexterity
