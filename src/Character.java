@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Character {
@@ -5,6 +6,8 @@ public abstract class Character {
     private final CharacterLevel level;
     private final CharacterCurrency currency;
     private final CharacterEquipment equipment;
+    private final CharacterInventory inventory = new CharacterInventory();
+    private final List<Spell> spells = new ArrayList<>();
     private final CharacterStats stats;
     private CombatBehavior combatBehavior = new CombatRandom();
 
@@ -37,6 +40,14 @@ public abstract class Character {
         return equipment;
     }
 
+    public CharacterInventory getInventory() {
+        return inventory;
+    }
+
+    public List<Spell> getSpells() {
+        return spells;
+    }
+
     public CharacterStats getStats() {
         return stats;
     }
@@ -50,12 +61,20 @@ public abstract class Character {
     }
 
     public ActionCombat action(List<Character> characters) {
+        if (isFainted()) {
+            return new ActionCombat(ActionCombatType.NONE, 0, null);
+        }
         return combatBehavior.action(characters, this);
     }
 
     public abstract int getDamage();
+    public abstract void applyCombat(ActionCombat action);
 
     public boolean isFainted() {
         return getStats().health <= 0;
+    }
+
+    public String getCombatString() {
+        return getName() + " " + getStats().getHealthString();
     }
 }

@@ -15,7 +15,7 @@ public class TestWorld {
         MapToken token = new MapToken("S", UtilPrintColors.RED);
 
         World world = new World(8);
-        world.addToken(token);
+        world.spawnToken(token);
         world.printMap();
 
         boolean valid = world.move(token, 0, 1);

@@ -1,13 +1,26 @@
-import java.util.Arrays;
-
 public class CharacterHero extends Character {
     CharacterHeroType type;
 
     // Name/mana/strength/agility/dexterity/starting money/starting experience
     public CharacterHero(String name, int mana, int strength, int agility, int dexterity, int money, int experience, CharacterHeroType type) {
-        super(name, new CharacterLevel(1, experience), new CharacterCurrency(money), null,
+        super(name, new CharacterLevel(1, experience), new CharacterCurrency(money), new CharacterEquipment(),
                 new CharacterStats(strength, agility, dexterity, 0, 0, 0));
         this.type = type;
+        switch (type) {
+            case WARRIOR:
+                getStats().setPreferences(true, true, false);
+                break;
+            case SORCERER:
+                getStats().setPreferences(false, true, true);
+                break;
+            case PALADIN:
+                getStats().setPreferences(true, false, true);
+                break;
+        }
+        getStats().setMana(mana);
+        getStats().setMaxMana(mana);
+        getStats().processSecondaryStats();
+        setAttackBehavior(new CombatPlayer());
     }
 
     @Override
@@ -15,6 +28,21 @@ public class CharacterHero extends Character {
         int strength = getStats().getStrength();
         int weaponDamage = getEquipment().getMainHand().getDamage();
         return (int) ((strength + weaponDamage) * 0.05);
+    }
+
+    @Override
+    public void applyCombat(ActionCombat action) {
+        if (action.getType() != ActionCombatType.USE) {
+            if (Math.random() < getStats().getDodgeChance()) {
+                return;
+            }
+            getStats().takeDamage(action.getDamage());
+        }
+    }
+
+    public void recover() {
+        getStats().addMana((int) (getStats().getMaxMana() * 0.1));
+        getStats().heal((int) (getStats().getMaxHealth() * 0.1));
     }
 
     public void endCombat(int gold, int experience) {

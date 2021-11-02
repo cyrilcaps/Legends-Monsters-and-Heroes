@@ -5,8 +5,9 @@ public class GlobalData {
     Load data from files
      */
 
-    // split by type?
-    private static final Map<String, CharacterHero> heroes = new HashMap<>();
+    private static final Map<String, CharacterHero> warriors = new HashMap<>();
+    private static final Map<String, CharacterHero> paladins = new HashMap<>();
+    private static final Map<String, CharacterHero> sorcerers = new HashMap<>();
 
     private static final Map<String, CharacterMonster> monsters = new HashMap<>();
 
@@ -17,10 +18,6 @@ public class GlobalData {
     private static final Map<String, ItemWeapon> weapons = new HashMap<>();
 
     private static final Map<String, ItemConsumable> potions = new HashMap<>();
-
-    public static Map<String, CharacterHero> getHeroes() {
-        return heroes;
-    }
 
     public static Map<String, CharacterMonster> getMonsters() {
         return monsters;
@@ -40,6 +37,18 @@ public class GlobalData {
 
     public static Map<String, ItemConsumable> getPotions() {
         return potions;
+    }
+
+    public static Map<String, CharacterHero> getHeroes(CharacterHeroType type) {
+        switch (type) {
+            case WARRIOR:
+                return warriors;
+            case SORCERER:
+                return sorcerers;
+            case PALADIN:
+                return paladins;
+        }
+        return warriors;
     }
 
     public static <T> T getRandom (Map<String, T> map) {

@@ -1,7 +1,7 @@
 public class CharacterEquipment {
-    ItemWeapon mainHand;
+    ItemWeapon mainHand = new ItemWeapon("Hands", 0, 0, 0, 2);
     Equipable offHand;
-    Equipable armor;
+    ItemArmor armor;
 
     public CharacterEquipment() {
 
@@ -11,27 +11,19 @@ public class CharacterEquipment {
         return mainHand;
     }
 
-    public Equipable getOffHand() {
-        return offHand;
-    }
-
-    public Equipable getArmor() {
+    public ItemArmor getArmor() {
         return armor;
     }
 
-    public void setMainHand(ItemWeapon mainHand) {
+    public ItemWeapon equipMainhHand(ItemWeapon mainHand) {
+        ItemWeapon previous = this.mainHand;
         this.mainHand = mainHand;
+        return previous;
     }
 
-    public void setOffHand(Character character, Equipable offHand) {
-        this.offHand.unequip(character);
-        this.offHand = offHand;
-        mainHand.equip(character, this.offHand);
-    }
-
-    public void setArmor(Character character, Equipable armor) {
-        this.armor.unequip(character);
+    public ItemArmor equipArmor(ItemArmor armor) {
+        ItemArmor previous = this.armor;
         this.armor = armor;
-        mainHand.equip(character, this.armor);
+        return previous;
     }
 }

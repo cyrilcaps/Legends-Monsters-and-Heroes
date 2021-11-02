@@ -38,7 +38,7 @@ public class DataLoader {
                             Integer.parseInt(vals[5]),
                             Integer.parseInt(vals[6]),
                             type);
-                    GlobalData.getHeroes().put(hero.getName(), hero);
+                    GlobalData.getHeroes(type).put(hero.getName(), hero);
                 }
             } catch (IOException e) {
                 // do nothing

@@ -1,5 +1,6 @@
 public enum ActionCombatType {
     ATTACK,
+    SPELL,
     USE,
-    SPELL
+    NONE
 }

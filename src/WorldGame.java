@@ -10,10 +10,11 @@ public class WorldGame extends Game {
     }
 
     public void addParty(Party party) {
-        world.addToken(party.getToken());
+        world.spawnToken(party.getToken());
         partyList.add(party);
     }
 
+    @Override
     public void play() {
         turnBasedManager.addTeam(partyList);
 
@@ -25,20 +26,24 @@ public class WorldGame extends Game {
             // get action
             ActionWorld action = party.move();
 
-            // action = quit
-            if (action.getType().equals(ActionMapType.QUIT)) {
-                return;
-            } else if (action.getType().equals(ActionMapType.QUIT)) {
-
+            // quit will exit play
+            boolean valid = false;
+            switch (action.getType()) {
+                case MOVE:
+                    valid = world.move(party.getToken(), action.getCoordinates()[0], action.getCoordinates()[1]);
+                case NONE:
+                    break;
+                case QUIT:
+                    return;
             }
 
-            // action = move
-            boolean valid = world.move(party.getToken(), action.getCoordinates()[0], action.getCoordinates()[1]);
-
-            // resolve new square - empty, fight, or market
+            // resolve new square - market or common
             if (valid) {
                 MapSquare currentSquare = world.getMapSquare(party.getToken());
-
+                Event event = EventFactory.generateEvent(currentSquare.getType());
+                if (event != null) {
+                    event.enter(party);
+                }
                 party = turnBasedManager.next();
             }
         }

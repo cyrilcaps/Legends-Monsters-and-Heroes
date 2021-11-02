@@ -1,34 +1,21 @@
-public class Spell {
-    private final String name;
-    private final int price;
-    private final int levelRequirement;
+public class Spell extends Item {
     private final int damage;
     private final int manaCost;
     private final SpellType type;
 
     public Spell(String name, int price, int levelRequirement, int damage, int manaCost, SpellType type) {
-        this.name = name;
-        this.price = price;
-        this.levelRequirement = levelRequirement;
+        super(name, levelRequirement, price);
         this.damage = damage;
         this.manaCost = manaCost;
         this.type = type;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getLevelRequirement() {
-        return levelRequirement;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
     public int getDamage() {
         return damage;
+    }
+
+    public int getDamage(int dexterity) {
+        return damage + (dexterity/10000) * damage;
     }
 
     public int getManaCost() {
@@ -41,13 +28,6 @@ public class Spell {
 
     @Override
     public String toString() {
-        return "Spell{" +
-                "name='" + name + '\'' +
-                ", levelRequirement=" + levelRequirement +
-                ", price=" + price +
-                ", damage=" + damage +
-                ", manaCost=" + manaCost +
-                ", type=" + type +
-                '}';
+        return getName() + ": " + getManaCost() + " Mana, " + getDamage() + " " + getType() + " damage";
     }
 }

@@ -1,7 +1,5 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class LegendsMonstersAndHeroes {
     public static void start() {
@@ -21,20 +19,39 @@ public class LegendsMonstersAndHeroes {
                 .collect(Collectors.toList());
         System.out.println("Choose color:");
         int selection = Input.getIntWithMenu(colorStrings, 1);
-        UtilPrintColors color  = colors.get(selection - 1);
+        UtilPrintColors color  = colors.get(selection);
 
         // init party
         Party party = new Party(symbol, color);
 
         int partyCount = -1;
         do {
-            partyCount = Input.getInt("Insert number of heroes:");
-        } while(partyCount == -1);
-        IntStream.range(0, partyCount).forEach(x -> party.addHero(GlobalData.getRandom(GlobalData.getHeroes())));
+            partyCount = Input.getInt("Insert number of heroes (1-3):");
+        } while(partyCount == -1 || partyCount > 3);
+        Map<String, CharacterHero> heroes = new HashMap<>();
+        while (heroes.size() < partyCount) {
+            CharacterHero hero = heroSelector();
+            if (hero != null) {
+                if (heroes.put(hero.getName(), hero) != null) {
+                    System.out.println(hero.getName() + " already in party.");
+                } else {
+                    party.addHero(hero);
+                }
+            }
+        }
 
         // init world
         WorldGame game = new WorldGame();
         game.addParty(party);
         game.play();
+    }
+
+    private static CharacterHero heroSelector() {
+        CharacterHeroType type = Input.getInputWithMenuBack(Arrays.asList(CharacterHeroType.values()), false);
+        if (type == null) {
+            return null;
+        }
+        List<CharacterHero> heroes = new ArrayList<>(GlobalData.getHeroes(type).values());
+        return Input.getInputWithMenuBack(heroes, true);
     }
 }

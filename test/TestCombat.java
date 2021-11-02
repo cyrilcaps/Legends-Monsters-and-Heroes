@@ -16,7 +16,7 @@ public class TestCombat {
     @Test
     public void testAttackRandom() {
         CharacterMonster monster = GlobalData.getRandom(GlobalData.getMonsters());
-        CharacterHero hero = GlobalData.getRandom(GlobalData.getHeroes());
+        CharacterHero hero = GlobalData.getRandom(GlobalData.getHeroes(CharacterHeroType.WARRIOR));
         ActionCombat combat = monster.action(Collections.singletonList(hero));
         Assertions.assertEquals(monster.getStats().getDamage(), combat.getDamage());
         Assertions.assertEquals(hero.getName(), combat.getTargetName());
@@ -26,7 +26,7 @@ public class TestCombat {
     public void testAttackRandomMulti() {
         CharacterMonster monster = GlobalData.getRandom(GlobalData.getMonsters());
         List<Character> heroes = new ArrayList<>();
-        IntStream.range(0, 3).forEach(x -> {heroes.add(GlobalData.getRandom(GlobalData.getHeroes()));});
+        IntStream.range(0, 3).forEach(x -> {heroes.add(GlobalData.getRandom(GlobalData.getHeroes(CharacterHeroType.WARRIOR)));});
         ActionCombat combat = monster.action(heroes);
         Assertions.assertEquals(monster.getStats().getDamage(), combat.getDamage());
         System.out.println(combat);

@@ -14,6 +14,7 @@ public class World {
         populateMap();
     }
 
+    // randomly populate map using weights
     private void populateMap() {
         // 20% non-accessible cells, 10% markets and 70% common cells
         int totalSize = size * size;
@@ -39,7 +40,8 @@ public class World {
         } while (!validate());
     }
 
-    // basic check that all accessible squares have a possible move
+    // basic check that each squares has ONE possible move
+    // will not catch if multiple squares are blocked off
     private boolean validate() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -61,7 +63,10 @@ public class World {
         return true;
     }
 
-    public void addToken(MapToken token) {
+    /*
+    Place token on a random valid square on map
+     */
+    public void spawnToken(MapToken token) {
         boolean valid = false;
         while(!valid) {
             int x = Math.min((int) (Math.random() * size), 7);
@@ -72,10 +77,12 @@ public class World {
         }
     }
 
+    // get square of token's location
     public MapSquare getMapSquare(MapToken token) {
         return map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);
     }
 
+    // try to move token to valid square, true is success, false if invalid
     public boolean move(MapToken token, int newRow, int newCol) {
         // check next square valid
         if(!map.isValid(newRow, newCol)) {
@@ -99,6 +106,7 @@ public class World {
         return true;
     }
 
+    // print map
     public void printMap() {
         map.printBoard(false);
     }

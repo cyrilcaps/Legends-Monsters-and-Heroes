@@ -31,4 +31,14 @@ public class TurnBasedManager<E> implements Iterator<E> {
 
         return teams.get(team).get(player);
     }
+
+    public List<E> getTeam(int i) {
+        return teams.get(i);
+    }
+
+    public List<E> getNextTeam() {
+        // select team
+        int team = selector % teams.size();
+        return teams.get(team);
+    }
 }

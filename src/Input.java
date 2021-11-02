@@ -40,12 +40,32 @@ public class Input {
                 break;
             }
         }
-        return input;
+        return input - startIndex;
     }
 
-    public static String getStringWithMenu(List<String> menuOptions, int startIndex) {
-        int selection = getIntWithMenu(menuOptions, startIndex);
-        return menuOptions.get(selection + startIndex);
+    // input selection based on list, option to have 0 return null
+    public static <E> E getInputWithMenuBack(List<E> menuOptions, boolean back) {
+        StringBuilder menu = new StringBuilder();
+        if (back) {
+            menu.append("[0] Back\n");
+        }
+
+        int startIndex = 1;
+        for (int i = 0; i < menuOptions.size(); i++) {
+            menu.append("[").append(i + startIndex).append("] ").append(menuOptions.get(i)).append("\n");
+        }
+        int input;
+        while (true) {
+            input = getInt(menu + "Selection? ");
+            if (input == 0 && back) {
+                return null;
+            } else if (input < 0 || input > startIndex + menuOptions.size() - 1) {
+                System.out.println("Invalid input.");
+            } else {
+                break;
+            }
+        }
+        return menuOptions.get(input - startIndex);
     }
 
     public static boolean getConfirm(String message, List<String> confirmStrings) {

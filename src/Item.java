@@ -1,7 +1,7 @@
 public class Item {
-    private String name;
-    private int levelRequirement;
-    private int price;
+    private final String name;
+    private final int levelRequirement;
+    private final int price;
 
     public Item(String name, int levelRequirement, int price) {
         this.name = name;

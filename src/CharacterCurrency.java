@@ -2,6 +2,7 @@ public class CharacterCurrency {
     int gold;
 
     public CharacterCurrency(int gold) {
+        this.gold = gold;
     }
 
     public int getGold() {

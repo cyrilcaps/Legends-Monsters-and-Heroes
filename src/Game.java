@@ -33,11 +33,4 @@ public class Game {
     public boolean isFinished() {
         return true;
     }
-
-    public void processResult(String winningTeam) {
-    }
-
-    private void printTeams() {
-        // print round order
-    }
 }

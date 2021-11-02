@@ -14,7 +14,7 @@ public class TestDataLoader {
 
     @Test
     public void heroReader() {
-        System.out.println(GlobalData.getHeroes().toString());
+        System.out.println(GlobalData.getHeroes(CharacterHeroType.WARRIOR).toString());
     }
 
     @Test
