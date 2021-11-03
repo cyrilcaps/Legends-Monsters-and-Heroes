@@ -1,7 +1,7 @@
 public class ItemArmor extends Item implements Equipable {
-    private int damageReduction;
+    private final int damageReduction;
 
-    public ItemArmor(String name, int levelRequirement, int price, int damageReduction) {
+    public ItemArmor(String name, int price, int levelRequirement, int damageReduction) {
         super(name, levelRequirement, price);
         this.damageReduction = damageReduction;
     }
@@ -14,5 +14,10 @@ public class ItemArmor extends Item implements Equipable {
     @Override
     public CharacterStats unequip(Character c) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " RED: " + damageReduction;
     }
 }

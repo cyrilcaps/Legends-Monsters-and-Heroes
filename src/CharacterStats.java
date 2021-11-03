@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class CharacterStats {
-    int health = 100;
-    int maxHealth = 100;
-    int mana;
-    int maxMana;
+    private int health = 100;
+    private int maxHealth = 100;
+    private int mana;
+    private int maxMana;
 
     private int strength;
     private int agility;

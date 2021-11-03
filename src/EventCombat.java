@@ -10,7 +10,9 @@ public class EventCombat extends Event {
 
     @Override
     public void enter(Party party) {
+        System.out.println("Wild monster appeared, prepare yourself!");
         List<Character> characters = new ArrayList<>(party.getHeroes().values());
         Combat combat = new Combat(characters, monsters);
+        combat.play();
     }
 }

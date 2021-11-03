@@ -28,6 +28,6 @@ public class Spell extends Item {
 
     @Override
     public String toString() {
-        return getName() + ": " + getManaCost() + " Mana, " + getDamage() + " " + getType() + " damage";
+        return super.toString() + ", " + getManaCost() + " Mana, " + getDamage() + " " + getType() + " damage";
     }
 }

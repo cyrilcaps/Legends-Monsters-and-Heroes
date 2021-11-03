@@ -3,10 +3,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EventShop extends Event {
-    private List<ItemWeapon> weapons;
-    private List<ItemArmor> armors;
-    private List<Spell> spells;
-    private List<ItemConsumable> potions;
+    private final List<ItemWeapon> weapons;
+    private final List<ItemArmor> armors;
+    private final List<Spell> spells;
+    private final List<ItemConsumable> potions;
 
     public EventShop(List<ItemWeapon> weapons, List<ItemArmor> armors, List<Spell> spells, List<ItemConsumable> potions) {
         this.weapons = weapons;
@@ -17,7 +17,26 @@ public class EventShop extends Event {
 
     @Override
     public void enter(Party party) {
-
+        System.out.println("Welcome to the market!");
+        List<Character> characters = new ArrayList<>(party.getHeroes().values());
+        while (true) {
+            Character character = Input.getInputWithMenuBack(characters, true);
+            if (character == null) {
+                return;
+            }
+            String buyOrSell = Input.getInputWithMenuBack(Arrays.asList("Buy", "Sell"), true);
+            if (buyOrSell == null) {
+                continue;
+            }
+            switch (buyOrSell) {
+                case "Buy":
+                    categorySelector(character);
+                    break;
+                case "Sell":
+                    categorySelector(character);
+                    break;
+            }
+        }
     }
 
     private void categorySelector(Character character) {
@@ -27,6 +46,7 @@ public class EventShop extends Event {
             if (category == null) {
                 return;
             }
+            System.out.println(character);
             buy(category, character);
         }
     }

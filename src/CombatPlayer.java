@@ -21,7 +21,7 @@ public class CombatPlayer implements CombatBehavior {
                     action.setDamage(character.getDamage());
                     break;
                 case SPELL: // spell
-                    Spell spell = spellSelector(character.getSpells(), character.getStats().mana);
+                    Spell spell = spellSelector(character.getSpells(), character.getStats().getMana());
                     if (spell == null) {
                         // go back to attack selection
                         continue;

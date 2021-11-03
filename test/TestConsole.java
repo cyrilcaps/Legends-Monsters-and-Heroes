@@ -10,7 +10,7 @@ public class TestConsole {
     public static void main(String[] args) {
         DataLoader.loadAll();
 
-        heroCombatInvalid();
+        marketTest();
     }
 
     public static void heroCombat() {
@@ -36,5 +36,12 @@ public class TestConsole {
         System.out.println(monsterList);
         ActionCombat combat = hero.action(monsterList);
         monster.applyCombat(combat);
+    }
+
+    public static void marketTest() {
+        Event market = EventFactory.generateEvent(MapSquareType.MARKET);
+        Party party = new Party("S", UtilPrintColors.RED);
+        party.addHero(GlobalData.getRandom(GlobalData.getHeroes(CharacterHeroType.WARRIOR)));
+        market.enter(party);
     }
 }

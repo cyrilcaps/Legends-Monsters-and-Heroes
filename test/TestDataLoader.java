@@ -26,4 +26,14 @@ public class TestDataLoader {
     public void spellReader() {
         System.out.println(GlobalData.getSpells().toString());
     }
+
+    @Test
+    public void weaponReader() {
+        System.out.println(GlobalData.getWeapons().toString());
+    }
+
+    @Test
+    public void armorReader() {
+        System.out.println(GlobalData.getArmors().toString());
+    }
 }

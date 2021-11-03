@@ -1,8 +1,8 @@
 public class ItemWeapon extends Item implements Equipable {
-    private int damage;
-    private int requiredHands;
+    private final int damage;
+    private final int requiredHands;
 
-    public ItemWeapon(String name, int levelRequirement, int price, int damage, int requiredHands) {
+    public ItemWeapon(String name, int price, int levelRequirement, int damage, int requiredHands) {
         super(name, levelRequirement, price);
         this.damage = damage;
         this.requiredHands = requiredHands;
@@ -24,5 +24,10 @@ public class ItemWeapon extends Item implements Equipable {
     @Override
     public CharacterStats unequip(Character c) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " DMG: " + damage + ", HANDS: " + requiredHands;
     }
 }

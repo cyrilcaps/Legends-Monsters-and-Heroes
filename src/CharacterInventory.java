@@ -28,4 +28,11 @@ public class CharacterInventory {
         }
         return potion;
     }
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "potions=" + potions +
+                '}';
+    }
 }

@@ -69,7 +69,7 @@ public class Input {
     }
 
     public static boolean getConfirm(String message, List<String> confirmStrings) {
-        String input = getString(message);
+        String input = getString(message + " " + confirmStrings);
         return confirmStrings.contains(input);
     }
 }

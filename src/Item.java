@@ -20,4 +20,10 @@ public class Item {
     public int getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return name  + " - Lvl Req.: " + levelRequirement +
+                ", price: " + price + "G";
+    }
 }

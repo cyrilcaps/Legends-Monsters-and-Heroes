@@ -26,4 +26,12 @@ public class CharacterEquipment {
         this.armor = armor;
         return previous;
     }
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "mainHand=" + mainHand +
+                ", armor=" + armor +
+                '}';
+    }
 }

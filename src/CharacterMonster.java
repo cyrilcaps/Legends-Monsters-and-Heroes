@@ -18,7 +18,10 @@ public class CharacterMonster extends Character {
             System.out.println(getName() + " dodged the attack!");
             return;
         }
-        getStats().takeDamage(action.getDamage());
+        int damage = Math.max(action.getDamage() - getStats().getDamageReduction(), 0);
+        getStats().takeDamage(damage);
+        System.out.println(getName() + " received " + damage + " damage");
+        getStats().takeDamage(damage);
     }
 
     @Override

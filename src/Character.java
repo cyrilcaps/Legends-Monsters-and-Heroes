@@ -52,13 +52,20 @@ public abstract class Character {
         return stats;
     }
 
-    /*
-    Combat methods
-     */
-
     public void setAttackBehavior(CombatBehavior combatBehavior) {
         this.combatBehavior = combatBehavior;
     }
+
+    /*
+    abstract methods
+     */
+
+    public abstract int getDamage();
+    public abstract void applyCombat(ActionCombat action);
+
+    /*
+    combat action based on combat behavior
+     */
 
     public ActionCombat action(List<Character> characters) {
         if (isFainted()) {
@@ -67,14 +74,30 @@ public abstract class Character {
         return combatBehavior.action(characters, this);
     }
 
-    public abstract int getDamage();
-    public abstract void applyCombat(ActionCombat action);
+    /*
+    helper methods
+     */
 
     public boolean isFainted() {
-        return getStats().health <= 0;
+        return getStats().getHealth() <= 0;
     }
 
     public String getCombatString() {
         return getName() + " " + getStats().getHealthString();
+    }
+
+    // add gold and process experience if alive, else heal to half
+    public void endCombat(int gold, int experience) {
+        if (!isFainted()) {
+            getCurrency().addGold(gold);
+
+            // add experience, if leveled up - update stats
+            int levels = getLevel().addExperience(experience);
+            getStats().levelUp(levels);
+        }
+    }
+
+    public void endCombat() {
+        getCurrency().removeGold(getCurrency().getGold()/2);
     }
 }
