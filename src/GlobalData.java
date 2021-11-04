@@ -17,7 +17,7 @@ public class GlobalData {
 
     private static final Map<String, ItemWeapon> weapons = new HashMap<>();
 
-    private static final Map<String, ItemConsumable> potions = new HashMap<>();
+    private static final Map<String, ItemPotion> potions = new HashMap<>();
 
     public static Map<String, CharacterMonster> getMonsters() {
         return monsters;
@@ -35,7 +35,7 @@ public class GlobalData {
         return weapons;
     }
 
-    public static Map<String, ItemConsumable> getPotions() {
+    public static Map<String, ItemPotion> getPotions() {
         return potions;
     }
 

@@ -20,6 +20,14 @@ public class Combat extends Game {
         this.maxRound = heroes.size() + monsters.size();
     }
 
+    private List<Character> getHeroes() {
+        return turnBasedManager.getTeam(0);
+    }
+
+    private List<Character> getMonsters() {
+        return turnBasedManager.getTeam(1);
+    }
+
     @Override
     public void play() {
         do {
@@ -44,18 +52,19 @@ public class Combat extends Game {
 
             // get action
             ActionCombat action = character.action(turnBasedManager.getNextTeam());
-            if (!action.getType().equals(ActionCombatType.NONE)) {
+            if (!action.getType().equals(ActionCombatType.NONE) && !action.getType().equals(ActionCombatType.USE)) {
                 // get character, apply combat action
-                System.out.println("Action! " + action);
+                System.out.println(character.getName() + " attacks " + action.getTargetName());
                 characterMap.get(action.getTargetName()).applyCombat(action);
             }
         } while (turnBasedManager.hasNext() && !determineWinner());
 
+        // resolve end of combat
         int bounty = getMonsterBounty();
-        for (Character hero : turnBasedManager.getTeam(0)) {
+        for (Character hero : getHeroes()) {
             // heal fainted hero to half of max
             if (hero.isFainted()) {
-                hero.getStats().heal(hero.getStats().getMaxHealth() / 2);
+                hero.getStats().addHealth(hero.getStats().getMaxHealth() / 2);
             }
 
             // win = gold + exp, lose = lose half gold
@@ -71,20 +80,19 @@ public class Combat extends Game {
     private boolean determineWinner() {
         // determine heroes all fainted
         boolean allFainted = true;
-        for (Character hero : turnBasedManager.getTeam(0)) {
+        for (Character hero : getHeroes()) {
             if (!hero.isFainted()) {
                 allFainted = false;
                 break;
             }
         }
         if (allFainted) {
-
             return true;
         }
 
         // determine monsters all fainted
         allFainted = true;
-        for (Character monster : turnBasedManager.getTeam(1)) {
+        for (Character monster : getMonsters()) {
             if (!monster.isFainted()) {
                 allFainted = false;
                 break;
@@ -100,7 +108,7 @@ public class Combat extends Game {
     // monster bounty = level * 100
     private int getMonsterBounty() {
         int bounty = 0;
-        for (Character monster : turnBasedManager.getTeam(1)) {
+        for (Character monster : getMonsters()) {
             bounty += monster.getLevel().getLevel() * 100;
         }
         return bounty;

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +9,6 @@ public class CombatPlayer implements CombatBehavior {
     public ActionCombat action(List<Character> targets, Character character) {
         ActionCombat action = new ActionCombat();
 
-        List<ActionCombatType> attackTypes = Arrays.asList(ActionCombatType.values());
         while (true) {
             ActionCombatType attackTypeSelect = Input.getInputWithMenuBack(
                     Arrays.asList(ActionCombatType.ATTACK, ActionCombatType.SPELL, ActionCombatType.USE), false);
@@ -32,7 +32,9 @@ public class CombatPlayer implements CombatBehavior {
                     break;
                 case USE: // potion
                     action.setType(ActionCombatType.USE);
-                    action.setTargetName(character.getName());
+                    if (!potionSelector(character)) {
+                        continue;
+                    }
                     break;
                 default:
                     // invalid input
@@ -85,5 +87,16 @@ public class CombatPlayer implements CombatBehavior {
             return null;
         }
         return target.getName();
+    }
+
+    private boolean potionSelector(Character character) {
+        ItemPotion consumable = Input.getInputWithMenuBack(
+                new ArrayList<>(character.getInventory().getPotions().values()), true);
+        if (consumable != null) {
+            consumable.consume(character);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

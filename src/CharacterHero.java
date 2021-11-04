@@ -54,7 +54,7 @@ public class CharacterHero extends Character {
     // health and mana recovery per round
     public void recover() {
         getStats().addMana((int) (getStats().getMaxMana() * 0.1));
-        getStats().heal((int) (getStats().getMaxHealth() * 0.1));
+        getStats().addHealth((int) (getStats().getMaxHealth() * 0.1));
     }
 
     @Override

@@ -6,9 +6,9 @@ public class EventShop extends Event {
     private final List<ItemWeapon> weapons;
     private final List<ItemArmor> armors;
     private final List<Spell> spells;
-    private final List<ItemConsumable> potions;
+    private final List<ItemPotion> potions;
 
-    public EventShop(List<ItemWeapon> weapons, List<ItemArmor> armors, List<Spell> spells, List<ItemConsumable> potions) {
+    public EventShop(List<ItemWeapon> weapons, List<ItemArmor> armors, List<Spell> spells, List<ItemPotion> potions) {
         this.weapons = weapons;
         this.armors = armors;
         this.spells = spells;
@@ -72,7 +72,7 @@ public class EventShop extends Event {
                 character.getSpells().add(spell);
                 break;
             case "Potions":
-                ItemConsumable potion = itemSelector(potions, character);
+                ItemPotion potion = itemSelector(potions, character);
                 character.getInventory().addPotion(potion);
                 break;
         }
@@ -93,7 +93,7 @@ public class EventShop extends Event {
                 character.getSpells().add(spell);
                 break;
             case "Potions":
-                ItemConsumable potion = itemSelector(potions, character);
+                ItemPotion potion = itemSelector(potions, character);
                 character.getInventory().addPotion(potion);
                 break;
         }

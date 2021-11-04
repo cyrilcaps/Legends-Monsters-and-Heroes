@@ -97,6 +97,7 @@ public abstract class Character {
         }
     }
 
+    // remove gold on faint
     public void endCombat() {
         getCurrency().removeGold(getCurrency().getGold()/2);
     }

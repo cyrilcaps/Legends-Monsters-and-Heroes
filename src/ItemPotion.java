@@ -1,8 +1,8 @@
-public class ItemConsumable extends Item {
+public class ItemPotion extends Item implements Consumable {
     private final CharacterStats stats;
     private int count = 1;
 
-    public ItemConsumable(String name, int levelRequirement, int price, CharacterStats stats) {
+    public ItemPotion(String name, int levelRequirement, int price, CharacterStats stats) {
         super(name, levelRequirement, price);
         this.stats = stats;
     }
@@ -17,6 +17,13 @@ public class ItemConsumable extends Item {
 
     public void addCount(int add) {
         count += add;
+    }
+
+    @Override
+    public void consume(Character character) {
+        // remove potion from inventory and apply stats to character
+        character.getInventory().getPotion(getName());
+        character.getStats().applyStat(stats);
     }
 
     @Override

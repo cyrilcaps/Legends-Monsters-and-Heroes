@@ -7,13 +7,8 @@ public class ItemArmor extends Item implements Equipable {
     }
 
     @Override
-    public CharacterStats equip(Character c, Equipable e) {
-        return null;
-    }
-
-    @Override
-    public CharacterStats unequip(Character c) {
-        return null;
+    public void equip(Character c) {
+        c.getEquipment().equipArmor(this);
     }
 
     @Override

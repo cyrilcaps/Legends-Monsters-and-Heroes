@@ -121,23 +121,13 @@ public class CharacterStats {
     }
 
     public void applyBuff(String buffName, CharacterStats buff) {
-        heal(buff.getHealth());
+        addHealth(buff.getHealth());
         addMana(buff.getMana());
         strength += buff.getStrength();
         agility += buff.getAgility();
         dexterity += buff.getDexterity();
         processSecondaryStats();
         buffs.put(buffName, buff);
-    }
-
-    public void removeBuffs() {
-        for (CharacterStats buff : buffs.values()) {
-            strength -= buff.getStrength();
-            agility -= buff.getAgility();
-            dexterity -= buff.getDexterity();
-        }
-        processSecondaryStats();
-        buffs.clear();
     }
 
     public void setPreferences(boolean preferStrength, boolean preferAgility, boolean preferDexterity) {
@@ -181,7 +171,7 @@ public class CharacterStats {
         health = Math.max(health - damage, 0);
     }
 
-    public void heal(int heal) {
+    public void addHealth(int heal) {
         health = Math.min(health + heal, maxHealth);
     }
 
@@ -199,6 +189,18 @@ public class CharacterStats {
 
     public String getHealthString() {
         return getHealth() + "/" + getMaxHealth() + " HP";
+    }
+
+    // add other CharacterStats object to this object
+    public void applyStat(CharacterStats otherStats) {
+        addHealth(otherStats.getHealth());
+        addMana(otherStats.getMana());
+        strength += otherStats.getStrength();
+        dexterity += otherStats.getDexterity();
+        agility += otherStats.getAgility();
+
+        // determine new values for secondary stats
+        processSecondaryStats();
     }
 
     @Override

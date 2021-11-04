@@ -40,7 +40,8 @@ public class WorldGame extends Game {
             // resolve new square - market or common
             if (valid) {
                 MapSquare currentSquare = world.getMapSquare(party.getToken());
-                Event event = EventFactory.generateEvent(currentSquare.getType());
+                Event event = EventFactory.generateEvent(currentSquare.getType(),
+                        new ArrayList<>(party.getHeroes().values()));
                 if (event != null) {
                     event.enter(party);
                 }

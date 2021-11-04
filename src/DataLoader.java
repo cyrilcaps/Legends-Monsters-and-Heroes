@@ -155,7 +155,7 @@ public class DataLoader {
             while ((line = br.readLine()) != null) {
                 String[] vals = line.split("\\s+");
 
-                ItemConsumable consumable = new ItemConsumable(vals[0],
+                ItemPotion consumable = new ItemPotion(vals[0],
                         Integer.parseInt(vals[1]),
                         Integer.parseInt(vals[2]),
                         statReader(Integer.parseInt(vals[3]), vals[4]));

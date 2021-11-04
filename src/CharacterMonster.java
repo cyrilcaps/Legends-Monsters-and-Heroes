@@ -3,7 +3,7 @@ public class CharacterMonster extends Character {
 
     public CharacterMonster(String name, int level, int damage, int defense, int dodgeChance, CharacterMonsterType type) {
         super(name, new CharacterLevel(level, 0), null, null,
-                new CharacterStats(1, 1, 1, damage, dodgeChance * 0.01, defense));
+                new CharacterStats(1, 1, 1, damage/10, dodgeChance * 0.01, defense));
         this.type = type;
     }
 
