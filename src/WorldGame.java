@@ -18,11 +18,11 @@ public class WorldGame extends Game {
     public void play() {
         turnBasedManager.addTeam(partyList);
 
+        // game start
+        world.printMap();
+
         Party party = turnBasedManager.next();
         while (turnBasedManager.hasNext()) {
-            // print map
-            world.printMap();
-
             // get action
             ActionWorld action = party.move();
 
@@ -39,12 +39,20 @@ public class WorldGame extends Game {
 
             // resolve new square - market or common
             if (valid) {
+                // print new location
+                world.printMap();
+
+                // generate event for new location
                 MapSquare currentSquare = world.getMapSquare(party.getToken());
                 Event event = EventFactory.generateEvent(currentSquare.getType(),
                         new ArrayList<>(party.getHeroes().values()));
+
+                // enter event if exists
                 if (event != null) {
                     event.enter(party);
                 }
+
+                // next turn
                 party = turnBasedManager.next();
             }
         }

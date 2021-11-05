@@ -2,7 +2,7 @@ public class CharacterHero extends Character {
     CharacterHeroType type;
 
     // Name/mana/strength/agility/dexterity/starting money/starting experience
-    public CharacterHero(String name, int mana, int strength, int agility, int dexterity, int money, int experience, CharacterHeroType type) {
+    protected CharacterHero(String name, int mana, int strength, int agility, int dexterity, int money, int experience, CharacterHeroType type) {
         super(name, new CharacterLevel(1, experience), new CharacterCurrency(money), new CharacterEquipment(),
                 new CharacterStats(strength, agility, dexterity, 0, 0, 0));
         this.type = type;
@@ -21,14 +21,23 @@ public class CharacterHero extends Character {
         getStats().setMana(mana);
         getStats().setMaxMana(mana);
         getStats().processSecondaryStats();
+        (new ItemWeapon("Sword", 0, 1, 10, 1)).equip(this);
         setAttackBehavior(new CombatPlayer());
     }
 
     @Override
     public int getDamage() {
+        // damage = (strength + weapon damage) * 0.05
         int strength = getStats().getStrength();
-        int weaponDamage = getEquipment().getMainHand().getDamage();
-        return (int) ((strength + weaponDamage) * 0.05);
+        int weaponDamage = 0;
+        if (getEquipment().getMainHand() != null) {
+            weaponDamage = getEquipment().getMainHand().getDamage();
+        }
+        int totalDamage = (int) ((strength + weaponDamage) * 0.05);
+        if (getStats().isFreeze()) {
+            totalDamage = (int) (totalDamage * 0.9);
+        }
+        return totalDamage;
     }
 
     @Override
@@ -40,15 +49,16 @@ public class CharacterHero extends Character {
                 System.out.println(getName() + " dodged the attack!");
                 return;
             }
-            // calculate damage
-            int damage = Math.max(action.getDamage() - getStats().getDamageReduction(), 0);
+
+            // calculate damage taken = damage - damage reduction - armor damage reduction
+            int armor = getEquipment().getArmor() != null ? getEquipment().getArmor().getDamageReduction() : 0;
+            int damage = Math.max(action.getDamage() - getStats().getDamageReduction() - armor, 0);
             getStats().takeDamage(damage);
             System.out.println(getName() + " received " + damage + " damage");
             if (isFainted()) {
                 System.out.println(getName() + " fainted!");
             }
         }
-        // TODO: determine potion handling
     }
 
     // health and mana recovery per round
@@ -59,7 +69,7 @@ public class CharacterHero extends Character {
 
     @Override
     public String toString() {
-        return getName() + " " + type + " " + getLevel() + " " + getCurrency() + " " + getStats() +
+        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + " Lvl " + getLevel().getLevel()) + " " + getCurrency() + " " + getStats() +
                 "\n\t" + getEquipment() +
                 "\n\t" + getInventory();
     }

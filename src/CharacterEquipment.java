@@ -1,5 +1,5 @@
 public class CharacterEquipment {
-    ItemWeapon mainHand = new ItemWeapon("Hands", 0, 0, 0, 2);
+    ItemWeapon mainHand;
     Equipable offHand;
     ItemArmor armor;
 
@@ -15,16 +15,12 @@ public class CharacterEquipment {
         return armor;
     }
 
-    public ItemWeapon equipMainhHand(ItemWeapon mainHand) {
-        ItemWeapon previous = this.mainHand;
+    public void setMainHand(ItemWeapon mainHand) {
         this.mainHand = mainHand;
-        return previous;
     }
 
-    public ItemArmor equipArmor(ItemArmor armor) {
-        ItemArmor previous = this.armor;
+    public void setArmor(ItemArmor armor) {
         this.armor = armor;
-        return previous;
     }
 
     @Override

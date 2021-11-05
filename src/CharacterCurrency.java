@@ -23,6 +23,6 @@ public class CharacterCurrency {
 
     @Override
     public String toString() {
-        return gold + "G";
+        return Util.colorString(UtilPrintColors.YELLOW,gold + "G");
     }
 }

@@ -30,14 +30,11 @@ public class DataLoader {
                     }
                     String[] vals = line.split("\\s+");
 
-                    CharacterHero hero = new CharacterHero(vals[0],
-                            Integer.parseInt(vals[1]),
-                            Integer.parseInt(vals[2]),
-                            Integer.parseInt(vals[3]),
-                            Integer.parseInt(vals[4]),
-                            Integer.parseInt(vals[5]),
-                            Integer.parseInt(vals[6]),
-                            type);
+                    // load hero based on type
+                    CharacterHero hero = CharacterFactory.generateHero(type, vals);
+                    if (hero == null) {
+                        continue;
+                    }
                     GlobalData.getHeroes(type).put(hero.getName(), hero);
                 }
             } catch (IOException e) {
@@ -58,12 +55,10 @@ public class DataLoader {
                 while ((line = br.readLine()) != null) {
                     String[] vals = line.split("\\s+");
 
-                    CharacterMonster monster = new CharacterMonster(vals[0],
-                            Integer.parseInt(vals[1]),
-                            Integer.parseInt(vals[2]),
-                            Integer.parseInt(vals[3]),
-                            Integer.parseInt(vals[4]),
-                            type);
+                    CharacterMonster monster = CharacterFactory.generateMonster(type, vals);
+                    if (monster == null) {
+                        continue;
+                    }
                     GlobalData.getMonsters().put(monster.getName(), monster);
                 }
             } catch (IOException e) {

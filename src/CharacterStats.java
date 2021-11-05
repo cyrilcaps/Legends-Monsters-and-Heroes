@@ -18,7 +18,9 @@ public class CharacterStats {
     private double dodgeChance;
     private int damageReduction;
 
-    private final Map<String, CharacterStats> buffs = new HashMap<>();
+    private boolean freeze;
+    private boolean burn;
+    private boolean electrocute;
 
     public CharacterStats() {
     }
@@ -113,23 +115,50 @@ public class CharacterStats {
     }
 
     public double getDodgeChance() {
-        return dodgeChance;
+        return electrocute ? dodgeChance * 0.9 : dodgeChance;
     }
 
     public int getDamageReduction() {
-        return damageReduction;
+        return burn ? (int) (damageReduction * 0.9) : damageReduction;
     }
 
-    public void applyBuff(String buffName, CharacterStats buff) {
-        addHealth(buff.getHealth());
-        addMana(buff.getMana());
-        strength += buff.getStrength();
-        agility += buff.getAgility();
-        dexterity += buff.getDexterity();
-        processSecondaryStats();
-        buffs.put(buffName, buff);
+    public boolean isFreeze() {
+        return freeze;
     }
 
+    public boolean isBurn() {
+        return burn;
+    }
+
+    public boolean isElectrocute() {
+        return electrocute;
+    }
+
+    /*
+    status effects
+     */
+
+    public void spellDebuff(SpellType type) {
+        switch (type) {
+            case ICE:
+                freeze = true;
+                break;
+            case FIRE:
+                burn = true;
+                break;
+            case LIGHTNING:
+                electrocute = true;
+                break;
+        }
+    }
+
+    public void removeDebuffs() {
+        freeze = false;
+        burn = false;
+        electrocute = false;
+    }
+
+    // preferences for stat growth
     public void setPreferences(boolean preferStrength, boolean preferAgility, boolean preferDexterity) {
         if (preferStrength) {
             this.strengthGrowth = 1.1;
@@ -146,6 +175,7 @@ public class CharacterStats {
         levelUp(1);
     }
 
+    // determine stats on level up
     public void levelUp(int levels) {
         if (levels > 0) {
             maxHealth += 100*levels;
@@ -161,6 +191,7 @@ public class CharacterStats {
         }
     }
 
+    // process stats based on strength, agility, dexterity
     public void processSecondaryStats() {
         damage = (int) (strength * 0.05);
         dodgeChance = agility * 0.002;

@@ -1,4 +1,4 @@
-public class Spell extends Item {
+public class Spell extends Item implements Castable {
     private final int damage;
     private final int manaCost;
     private final SpellType type;
@@ -24,6 +24,14 @@ public class Spell extends Item {
 
     public SpellType getType() {
         return type;
+    }
+
+    @Override
+    public void cast(Character c, Character target) {
+        c.getStats().useMana(getManaCost());
+        target.getStats().spellDebuff(getType());
+        target.applyCombat(new ActionCombat(
+                ActionCombatType.SPELL, getDamage(c.getStats().getDexterity()), target.getName()));
     }
 
     @Override

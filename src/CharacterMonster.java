@@ -1,15 +1,19 @@
 public class CharacterMonster extends Character {
     private final CharacterMonsterType type;
 
-    public CharacterMonster(String name, int level, int damage, int defense, int dodgeChance, CharacterMonsterType type) {
+    protected CharacterMonster(String name, int level, int damage, int defense, int dodgeChance, CharacterMonsterType type) {
         super(name, new CharacterLevel(level, 0), null, null,
-                new CharacterStats(1, 1, 1, damage/10, dodgeChance * 0.01, defense));
+                new CharacterStats(1, 1, 1, damage/10, dodgeChance * 0.01, defense/10));
         this.type = type;
     }
 
     @Override
     public int getDamage() {
-        return getStats().getDamage();
+        int totalDamage = getStats().getDamage();
+        if (getStats().isFreeze()) {
+            totalDamage = (int) (totalDamage * 0.9);
+        }
+        return totalDamage;
     }
 
     @Override
@@ -26,6 +30,6 @@ public class CharacterMonster extends Character {
 
     @Override
     public String toString() {
-        return getName() + " " + type + " Lvl " + getLevel().getLevel() + " " + getStats();
+        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + " Lvl " + getLevel().getLevel()) + " " + getStats();
     }
 }

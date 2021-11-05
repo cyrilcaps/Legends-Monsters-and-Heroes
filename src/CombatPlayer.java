@@ -26,10 +26,23 @@ public class CombatPlayer implements CombatBehavior {
                         // go back to attack selection
                         continue;
                     }
+
+                    // select target
+                    Character target = targetSelector(targets);
+                    if (target == null) {
+                        // go back to attack selection
+                        continue;
+                    }
+
+                    // populate action
                     action.setType(ActionCombatType.SPELL);
                     action.setDamage(spell.getDamage(character.getStats().getDexterity()));
                     action.setManaCost(spell.getManaCost());
-                    break;
+                    action.setTargetName(target.getName());
+
+                    // cast spell on target
+                    spell.cast(character, target);
+                    return action;
                 case USE: // potion
                     action.setType(ActionCombatType.USE);
                     if (!potionSelector(character)) {
@@ -43,7 +56,7 @@ public class CombatPlayer implements CombatBehavior {
             }
 
             if (action.getTargetName() == null) {
-                String target = targetSelector(targets);
+                String target = targetSelector(targets).getName();
                 if (target == null) {
                     // go back to attack selection
                     continue;
@@ -52,7 +65,6 @@ public class CombatPlayer implements CombatBehavior {
             }
             break;
         }
-        character.getStats().useMana(action.getManaCost());
         return action;
     }
 
@@ -79,14 +91,14 @@ public class CombatPlayer implements CombatBehavior {
     }
 
     // select target (monster) to attack, or input 0 to choose different action
-    private String targetSelector(List<Character> targets) {
+    private Character targetSelector(List<Character> targets) {
         List<Character> validTarget = targets.stream().filter(character ->
                 !character.isFainted()).collect(Collectors.toList());
         Character target = Input.getInputWithMenuBack(validTarget, true);
         if (target == null) {
             return null;
         }
-        return target.getName();
+        return target;
     }
 
     private boolean potionSelector(Character character) {

@@ -6,9 +6,13 @@ public class ItemArmor extends Item implements Equipable {
         this.damageReduction = damageReduction;
     }
 
+    public int getDamageReduction() {
+        return damageReduction;
+    }
+
     @Override
     public void equip(Character c) {
-        c.getEquipment().equipArmor(this);
+        c.getEquipment().setArmor(this);
     }
 
     @Override

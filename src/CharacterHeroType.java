@@ -1,15 +1,26 @@
 public enum CharacterHeroType {
-    WARRIOR("Warriors.txt"),
-    SORCERER("Sorcerers.txt"),
-    PALADIN("Paladins.txt");
+    WARRIOR("Warriors.txt", UtilPrintColors.RED),
+    SORCERER("Sorcerers.txt", UtilPrintColors.BLUE),
+    PALADIN("Paladins.txt", UtilPrintColors.YELLOW);
 
     String fileName;
+    UtilPrintColors stringColor;
 
-    private CharacterHeroType(String fileName) {
+    private CharacterHeroType(String fileName, UtilPrintColors stringColor) {
         this.fileName = fileName;
+        this.stringColor = stringColor;
     }
 
     public String getFileName() {
         return fileName;
+    }
+
+    public UtilPrintColors getStringColor() {
+        return stringColor;
+    }
+
+    @Override
+    public String toString() {
+        return Util.colorString(stringColor, super.toString());
     }
 }

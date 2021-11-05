@@ -12,13 +12,9 @@ public class ItemWeapon extends Item implements Equipable {
         return damage;
     }
 
-    public int getRequiredHands() {
-        return requiredHands;
-    }
-
     @Override
     public void equip(Character c) {
-        c.getEquipment().equipMainhHand(this);
+        c.getEquipment().setMainHand(this);
     }
 
     @Override

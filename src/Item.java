@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Item {
     private final String name;
     private final int levelRequirement;
@@ -19,6 +21,16 @@ public class Item {
 
     public int getPrice() {
         return price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o != null) {
+            if (o instanceof Item) {
+                return ((Item) o).getName().equals(getName());
+            }
+        }
+        return false;
     }
 
     @Override

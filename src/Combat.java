@@ -52,7 +52,7 @@ public class Combat extends Game {
 
             // get action
             ActionCombat action = character.action(turnBasedManager.getNextTeam());
-            if (!action.getType().equals(ActionCombatType.NONE) && !action.getType().equals(ActionCombatType.USE)) {
+            if (action.getType().equals(ActionCombatType.ATTACK)) {
                 // get character, apply combat action
                 System.out.println(character.getName() + " attacks " + action.getTargetName());
                 characterMap.get(action.getTargetName()).applyCombat(action);
@@ -62,6 +62,9 @@ public class Combat extends Game {
         // resolve end of combat
         int bounty = getMonsterBounty();
         for (Character hero : getHeroes()) {
+            // remove any debuffs
+            hero.getStats().removeDebuffs();
+
             // heal fainted hero to half of max
             if (hero.isFainted()) {
                 hero.getStats().addHealth(hero.getStats().getMaxHealth() / 2);
@@ -87,6 +90,7 @@ public class Combat extends Game {
             }
         }
         if (allFainted) {
+            System.out.println(Util.colorString(UtilPrintColors.RED_BOLD, "Monsters are victorious"));
             return true;
         }
 
@@ -99,6 +103,7 @@ public class Combat extends Game {
             }
         }
         if (allFainted) {
+            System.out.println(Util.colorString(UtilPrintColors.YELLOW_BOLD, "Heroes are victorious"));
             heroWin = true;
             return true;
         }

@@ -6,7 +6,9 @@ public class GlobalData {
      */
 
     private static final Map<String, CharacterHero> warriors = new HashMap<>();
+
     private static final Map<String, CharacterHero> paladins = new HashMap<>();
+
     private static final Map<String, CharacterHero> sorcerers = new HashMap<>();
 
     private static final Map<String, CharacterMonster> monsters = new HashMap<>();
