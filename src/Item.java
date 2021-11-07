@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class Item {
     private final String name;
     private final int levelRequirement;

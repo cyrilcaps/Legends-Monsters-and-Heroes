@@ -37,11 +37,11 @@ public class WorldGame extends Game {
                     return;
             }
 
+            // print new location
+            world.printMap();
+
             // resolve new square - market or common
             if (valid) {
-                // print new location
-                world.printMap();
-
                 // generate event for new location
                 MapSquare currentSquare = world.getMapSquare(party.getToken());
                 Event event = EventFactory.generateEvent(currentSquare.getType(),
@@ -50,6 +50,9 @@ public class WorldGame extends Game {
                 // enter event if exists
                 if (event != null) {
                     event.enter(party);
+
+                    // print location
+                    world.printMap();
                 }
 
                 // next turn

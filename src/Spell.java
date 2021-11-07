@@ -30,6 +30,7 @@ public class Spell extends Item implements Castable {
     public void cast(Character c, Character target) {
         c.getStats().useMana(getManaCost());
         target.getStats().spellDebuff(getType());
+        System.out.println(c.getName() + " casts " + getName() + " on " + target.getName());
         target.applyCombat(new ActionCombat(
                 ActionCombatType.SPELL, getDamage(c.getStats().getDexterity()), target.getName()));
     }

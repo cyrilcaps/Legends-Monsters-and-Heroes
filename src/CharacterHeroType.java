@@ -3,8 +3,8 @@ public enum CharacterHeroType {
     SORCERER("Sorcerers.txt", UtilPrintColors.BLUE),
     PALADIN("Paladins.txt", UtilPrintColors.YELLOW);
 
-    String fileName;
-    UtilPrintColors stringColor;
+    private final String fileName;
+    private final UtilPrintColors stringColor;
 
     private CharacterHeroType(String fileName, UtilPrintColors stringColor) {
         this.fileName = fileName;

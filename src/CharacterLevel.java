@@ -6,8 +6,8 @@ public class CharacterLevel {
     public CharacterLevel(int level, int experience) {
         this.level = level;
         this.experience = experience;
-        this.nextLevel = calculateNextLevel();
         processExperience();
+        this.nextLevel = calculateNextLevel();
     }
 
     public CharacterLevel() {

@@ -3,10 +3,19 @@ import java.util.stream.Collectors;
 
 public class LegendsMonstersAndHeroes {
     public static void start() {
+        // welcome
+        System.out.println("              />\n" +
+                " (           //------------------------------------------------------\\\n" +
+                "(*)OXOXOXOXO(*>             LEGENDS: MONSTERS AND HEROES              \\\n" +
+                " (           \\\\------------------------------------------------------/\n" +
+                "              \\>");
+        System.out.println("Welcome! Please set-up your party.");
+
+
         // get symbol
-        String symbol = "";
+        String symbol;
         do {
-            symbol = Input.getString("Enter single character for symbol: ");
+            symbol = Input.getString("Enter single character for your map symbol: ");
         } while (symbol.length() != 1);
         symbol = symbol.toUpperCase();
 
@@ -24,7 +33,7 @@ public class LegendsMonstersAndHeroes {
         // init party
         Party party = new Party(symbol, color);
 
-        int partyCount = -1;
+        int partyCount;
         do {
             partyCount = Input.getInt("Insert number of heroes (1-3):");
         } while(partyCount == -1 || partyCount > 3);
@@ -44,6 +53,17 @@ public class LegendsMonstersAndHeroes {
         WorldGame game = new WorldGame();
         game.addParty(party);
         game.play();
+
+        // good bye message
+        System.out.println("\n************************************\n");
+        System.out.println("Thank you for playing!");
+        System.out.println("The world will remember the heroic efforts of your party:");
+        System.out.println("\tYou were victorious in " + party.getWins() + " out of " +
+                party.getCombats() + " battles.");
+        for (CharacterHero character : party.getHeroes().values()) {
+            System.out.println("\t" + Util.colorString(character.getType().getStringColor(), character.getName()
+                    + " " + character.getType().name() + " Lvl " + character.getLevel().getLevel()));
+        }
     }
 
     private static CharacterHero heroSelector() {

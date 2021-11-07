@@ -23,13 +23,17 @@ public class CharacterMonster extends Character {
             return;
         }
         int damage = Math.max(action.getDamage() - getStats().getDamageReduction(), 0);
-        getStats().takeDamage(damage);
         System.out.println(getName() + " received " + damage + " damage");
         getStats().takeDamage(damage);
     }
 
+    public String getMonsterName() {
+        return Util.colorString(type.getStringColor(),
+                getName() + " " + type.name() + " Lvl " + getLevel().getLevel());
+    }
+
     @Override
     public String toString() {
-        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + " Lvl " + getLevel().getLevel()) + " " + getStats();
+         return getMonsterName() + " - " + getStats().getHealthString() + " status:" + getStats().getStatusString();
     }
 }

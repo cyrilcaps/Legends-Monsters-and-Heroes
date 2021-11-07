@@ -4,6 +4,8 @@ import java.util.Map;
 public class Party {
     private final Map<String, CharacterHero> heroes = new HashMap<>();
     private final MapToken token;
+    private int combats = 0;
+    private int wins = 0;
 
     public Party(String symbol, UtilPrintColors color) {
         token = new MapToken(symbol, color);
@@ -15,6 +17,22 @@ public class Party {
 
     public MapToken getToken() {
         return token;
+    }
+
+    public void addCombat() {
+        combats += 1;
+    }
+
+    public int getCombats() {
+        return combats;
+    }
+
+    public void addWin() {
+        wins += 1;
+    }
+
+    public int getWins() {
+        return wins;
     }
 
     public void addHero(CharacterHero hero) {

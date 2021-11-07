@@ -1,4 +1,4 @@
-public class ActionWorld extends Action {
+public class ActionWorld {
     private final ActionMapType type;
     private final int[] coordinates;
 

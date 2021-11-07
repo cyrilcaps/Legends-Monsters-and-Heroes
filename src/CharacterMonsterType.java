@@ -1,6 +1,6 @@
 public enum CharacterMonsterType {
     DRAGON("Dragons.txt", UtilPrintColors.GREEN),
-    EXOSKELETON("Exoskeletons.txt", UtilPrintColors.WHITE_BOLD),
+    EXOSKELETON("Exoskeletons.txt", UtilPrintColors.RED),
     SPIRIT("Spirits.txt", UtilPrintColors.CYAN);
 
     String fileName;

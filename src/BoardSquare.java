@@ -1,4 +1,3 @@
-public class BoardSquare {
-    private String symbol;
+public abstract class BoardSquare {
 
 }

@@ -38,6 +38,10 @@ public class CharacterStats {
         this.health = health;
     }
 
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
     public void setMana(int mana) {
         this.mana = mana;
     }
@@ -218,10 +222,6 @@ public class CharacterStats {
         return true;
     }
 
-    public String getHealthString() {
-        return getHealth() + "/" + getMaxHealth() + " HP";
-    }
-
     // add other CharacterStats object to this object
     public void applyStat(CharacterStats otherStats) {
         addHealth(otherStats.getHealth());
@@ -234,6 +234,28 @@ public class CharacterStats {
         processSecondaryStats();
     }
 
+    public String getHealthString() {
+        return getHealth() + "/" + getMaxHealth() + " HP";
+    }
+
+    public String getStatusString() {
+        StringBuilder statuses = new StringBuilder("[");
+        if (burn) {
+            statuses.append(Util.colorString(UtilPrintColors.RED, "BURN")).append(",");
+        }
+        if (freeze) {
+            statuses.append(Util.colorString(UtilPrintColors.CYAN, "FREEZE")).append(",");
+        }
+        if (electrocute) {
+            statuses.append(Util.colorString(UtilPrintColors.YELLOW, "ELECTROCUTE")).append(",");
+        }
+        if (statuses.length() > 1) {
+            statuses.replace(statuses.length() - 1, statuses.length(), "");
+        }
+        statuses.append("]");
+        return statuses.toString();
+    }
+
     @Override
     public String toString() {
         return "CharacterStats:{" +
@@ -244,7 +266,8 @@ public class CharacterStats {
                 dexterity + " DEX, " +
                 damage + " DMG, " +
                 dodgeChance + "% DGE, " +
-                damageReduction + " RED" +
+                damageReduction + " RED, " +
+                "statuses:" + getStatusString() +
                 '}';
     }
 }

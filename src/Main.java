@@ -6,6 +6,7 @@ public class Main {
         // start
         LegendsMonstersAndHeroes.start();
 
+        // close input
         Input.close();
     }
 }

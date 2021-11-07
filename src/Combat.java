@@ -14,10 +14,14 @@ public class Combat extends Game {
         turnBasedManager.addTeam(heroes);
         turnBasedManager.addTeam(monsters);
 
-        heroes.forEach(character -> {characterMap.put(character.getName(), character);});
-        monsters.forEach(character -> {characterMap.put(character.getName(), character);});
+        heroes.forEach(character -> characterMap.put(character.getName(), character));
+        monsters.forEach(character -> characterMap.put(character.getName(), character));
 
         this.maxRound = heroes.size() + monsters.size();
+    }
+
+    public boolean isHeroWin() {
+        return heroWin;
     }
 
     private List<Character> getHeroes() {
@@ -48,6 +52,7 @@ public class Combat extends Game {
                 continue;
             }
 
+            System.out.println(Util.colorString(UtilPrintColors.RED_BOLD_BRIGHT,"*****************************"));
             System.out.println("Current player: " + character);
 
             // get action

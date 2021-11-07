@@ -82,23 +82,24 @@ public abstract class Character {
         return getStats().getHealth() <= 0;
     }
 
-    public String getCombatString() {
-        return getName() + " " + getStats().getHealthString();
-    }
-
     // add gold and process experience if alive, else heal to half
     public void endCombat(int gold, int experience) {
         if (!isFainted()) {
+            System.out.println(getName() + " gained " + gold + "G and " + experience + " EXP!");
             getCurrency().addGold(gold);
 
             // add experience, if leveled up - update stats
             int levels = getLevel().addExperience(experience);
+            if (levels > 0) {
+                System.out.println("\tGained " + levels + " levels!");
+            }
             getStats().levelUp(levels);
         }
     }
 
     // remove gold on faint
     public void endCombat() {
+        System.out.println(getName() + " lost " + getCurrency().getGold()/2  + "G");
         getCurrency().removeGold(getCurrency().getGold()/2);
     }
 }

@@ -21,8 +21,14 @@ public class CharacterHero extends Character {
         getStats().setMana(mana);
         getStats().setMaxMana(mana);
         getStats().processSecondaryStats();
-        (new ItemWeapon("Sword", 0, 1, 10, 1)).equip(this);
         setAttackBehavior(new CombatPlayer());
+
+        // starting weapon
+        (new ItemWeapon("Sword", 0, 1, 500, 1)).equip(this);
+    }
+
+    public CharacterHeroType getType() {
+        return type;
     }
 
     @Override
@@ -69,8 +75,9 @@ public class CharacterHero extends Character {
 
     @Override
     public String toString() {
-        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + " Lvl " + getLevel().getLevel()) + " " + getCurrency() + " " + getStats() +
+        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + getLevel()) + " " + getCurrency() + " " + getStats() +
                 "\n\t" + getEquipment() +
+                "\n\tSpells:" + getSpells() +
                 "\n\t" + getInventory();
     }
 }

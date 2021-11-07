@@ -17,7 +17,11 @@ public class EventShop extends Event {
 
     @Override
     public void enter(Party party) {
-        System.out.println("Welcome to the market!");
+        String marketVendor =
+                "\n  _|^|_     /|TRADE|\\\n" +
+                " (^ - ^)   /|_$$$$$_|\\\n" +
+                " (\\    )/ / |       | \\\n";
+        System.out.println(Util.colorString(UtilPrintColors.YELLOW_BRIGHT,marketVendor + "Welcome to the market!"));
         List<Character> characters = new ArrayList<>(party.getHeroes().values());
         while (true) {
             System.out.println("Who is entering the market? ([0] to leave)");
@@ -39,7 +43,7 @@ public class EventShop extends Event {
                     break;
             }
         }
-        System.out.println("Leaving the market.");
+        System.out.println("Goodbye! Good luck with your adventures!");
     }
 
     // choose category - Weapons, Armors, Spells, Potions
@@ -129,6 +133,7 @@ public class EventShop extends Event {
             } else if (item.getPrice() > character.getCurrency().getGold()) {
                 System.out.println("Insufficient gold");
             } else if (Input.getConfirm("Purchase " + item + " ?", Arrays.asList("Y", "y"))) {
+                items.remove(item);
                 return item;
             }
 

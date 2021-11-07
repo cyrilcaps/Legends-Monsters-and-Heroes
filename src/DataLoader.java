@@ -116,6 +116,8 @@ public class DataLoader {
 
     public static CharacterStats statReader(int value, String statString) {
         CharacterStats characterStats = new CharacterStats();
+        characterStats.setHealth(0);
+        characterStats.setMaxHealth(0);
         statString = statString.toUpperCase();
         String[] stats = statString.split("/");
         for (String stat : stats) {
@@ -151,8 +153,8 @@ public class DataLoader {
                 String[] vals = line.split("\\s+");
 
                 ItemPotion consumable = new ItemPotion(vals[0],
-                        Integer.parseInt(vals[1]),
                         Integer.parseInt(vals[2]),
+                        Integer.parseInt(vals[1]),
                         statReader(Integer.parseInt(vals[3]), vals[4]));
                 GlobalData.getPotions().put(consumable.getName(), consumable);
             }

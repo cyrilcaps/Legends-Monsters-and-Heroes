@@ -45,23 +45,26 @@ public class CombatPlayer implements CombatBehavior {
                     return action;
                 case USE: // potion
                     action.setType(ActionCombatType.USE);
-                    if (!potionSelector(character)) {
+                    ItemPotion potion = potionSelector(character);
+                    if (potion == null) {
                         continue;
                     }
-                    break;
+                    potion.consume(character);
+                    return action;
                 default:
                     // invalid input
                     System.out.println("Invalid attack option");
                     continue;
             }
 
+            // determine target
             if (action.getTargetName() == null) {
-                String target = targetSelector(targets).getName();
+                Character target = targetSelector(targets);
                 if (target == null) {
                     // go back to attack selection
                     continue;
                 }
-                action.setTargetName(target);
+                action.setTargetName(target.getName());
             }
             break;
         }
@@ -94,21 +97,12 @@ public class CombatPlayer implements CombatBehavior {
     private Character targetSelector(List<Character> targets) {
         List<Character> validTarget = targets.stream().filter(character ->
                 !character.isFainted()).collect(Collectors.toList());
-        Character target = Input.getInputWithMenuBack(validTarget, true);
-        if (target == null) {
-            return null;
-        }
-        return target;
+        return Input.getInputWithMenuBack(validTarget, true);
     }
 
-    private boolean potionSelector(Character character) {
-        ItemPotion consumable = Input.getInputWithMenuBack(
+    // select potion to use from inventory
+    private ItemPotion potionSelector(Character character) {
+        return Input.getInputWithMenuBack(
                 new ArrayList<>(character.getInventory().getPotions().values()), true);
-        if (consumable != null) {
-            consumable.consume(character);
-            return true;
-        } else {
-            return false;
-        }
     }
 }

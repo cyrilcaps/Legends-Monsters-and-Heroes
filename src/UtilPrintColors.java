@@ -13,7 +13,8 @@ public enum UtilPrintColors {
     WHITE_BOLD("\033[1;37m"),
     RED_BRIGHT("\033[0;91m"),
     YELLOW_BRIGHT("\033[0;93m"),
-    CYAN_BRIGHT("\033[0;96m");
+    CYAN_BRIGHT("\033[0;96m"),
+    RED_BOLD_BRIGHT("\033[1;91m");
 
     private final String color;
 

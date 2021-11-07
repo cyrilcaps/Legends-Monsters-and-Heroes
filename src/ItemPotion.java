@@ -24,10 +24,11 @@ public class ItemPotion extends Item implements Consumable {
         // remove potion from inventory and apply stats to character
         character.getInventory().getPotion(getName());
         character.getStats().applyStat(stats);
+        System.out.println(character.getName() + " drinks " + getName() + " and gains " + stats);
     }
 
     @Override
     public String toString() {
-        return super.toString() + " Stats{" + stats + "}";
+        return super.toString() + ", Count: " + count + ", Stats{" + stats + "}";
     }
 }
