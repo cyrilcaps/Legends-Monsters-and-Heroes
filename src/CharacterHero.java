@@ -75,7 +75,7 @@ public class CharacterHero extends Character {
 
     @Override
     public String toString() {
-        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + getLevel()) + " " + getCurrency() + " " + getStats() +
+        return Util.colorString(type.getStringColor(), getName() + " " + type.name() + " " + getLevel()) + " " + getCurrency() + " " + getStats() +
                 "\n\t" + getEquipment() +
                 "\n\tSpells:" + getSpells() +
                 "\n\t" + getInventory();
