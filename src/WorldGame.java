@@ -16,7 +16,11 @@ public class WorldGame extends Game {
 
     @Override
     public void play() {
-        turnBasedManager.addTeam(partyList);
+        for (Party value : partyList) {
+            List<Party> oneHeroParty = new ArrayList<>();
+            oneHeroParty.add(value);
+            turnBasedManager.addTeam(oneHeroParty);
+        }
 
         // game start
         world.printMap();
@@ -28,7 +32,10 @@ public class WorldGame extends Game {
 
             // quit will exit play
             boolean valid = false;
+            boolean turnEnded = false;
             switch (action.getType()) {
+                case END:
+                    turnEnded = true;
                 case MOVE:
                     valid = world.move(party.getToken(), action.getCoordinates()[0], action.getCoordinates()[1]);
                 case NONE:
@@ -55,8 +62,12 @@ public class WorldGame extends Game {
                     world.printMap();
                 }
 
-                // next turn
-                party = turnBasedManager.next();
+                // Next turn if:
+                // Hero ends turn
+                // Forced to end turn if: attacked or moved
+                if (turnEnded) {
+                    party = turnBasedManager.next();
+                }
             }
         }
     }

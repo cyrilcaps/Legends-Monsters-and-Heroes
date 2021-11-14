@@ -59,7 +59,9 @@ public class Input {
             input = getInt(menu + "Selection? ");
             if (input == 0 && back) {
                 return null;
-            } else if (input < 0 || input > startIndex + menuOptions.size() - 1) {
+            } else if (input <= 0 || input > startIndex + menuOptions.size() - 1) {
+                //Found a bug:
+                //If you enter 0 to select something for a fight, the game crashes!
                 System.out.println("Invalid input.");
             } else {
                 break;

@@ -1,7 +1,8 @@
 public enum MapSquareType {
     COMMON(" ", UtilPrintColors.RESET),
     INACCESSIBLE("X", UtilPrintColors.GREEN),
-    MARKET("M", UtilPrintColors.YELLOW);
+    MARKET("M", UtilPrintColors.YELLOW),
+    NEXUS("N", UtilPrintColors.RED);
 
     private final String symbol;
     private final UtilPrintColors color;

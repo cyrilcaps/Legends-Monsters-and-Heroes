@@ -4,12 +4,18 @@ import java.util.Map;
 public class CharacterInventory {
     private final Map<String, ItemPotion> potions = new HashMap<>();
 
+    //Added space for weapons and armor in a player's inventory
+    private final Map<String, ItemWeapon> weapons = new HashMap<>();
+    private final Map<String, ItemArmor> armor = new HashMap<>();
+
     public CharacterInventory() {
     }
 
     public Map<String, ItemPotion> getPotions() {
         return potions;
     }
+    public Map<String, ItemWeapon> getWeapons() { return weapons; }
+    public Map<String, ItemArmor> getArmor() { return armor; }
 
     // add potion to inventory, or increment count if exists
     public void addPotion(ItemPotion potion) {
@@ -29,10 +35,30 @@ public class CharacterInventory {
         return potion;
     }
 
+    //Add a weapon to inventory, no duplicates
+    public void addWeapon(ItemWeapon weapon) {
+        weapons.putIfAbsent(weapon.getName(), weapon);
+    }
+
+    public void removeWeapon(ItemWeapon weapon) {
+        weapons.remove(weapon.getName());
+    }
+
+    //Add a piece of armor to inventory, no duplicates
+    public void addArmor(ItemArmor armor) {
+        this.armor.putIfAbsent(armor.getName(), armor);
+    }
+
+    public void removeArmor(ItemArmor armor) {
+        this.armor.remove(armor.getName());
+    }
+
     @Override
     public String toString() {
         return "Inventory{" +
                 "potions=" + potions +
+                ", weapons=" + weapons +
+                ", armor=" + armor +
                 '}';
     }
 }

@@ -12,6 +12,13 @@ public class ItemArmor extends Item implements Equipable {
 
     @Override
     public void equip(Character c) {
+        if (c.getEquipment().getArmor() != null) {
+            //Send old armor from main hand to inventory
+            c.getInventory().addArmor(c.getEquipment().getArmor());
+            //Remove armor currently in inventory to be added to armor slot
+            c.getInventory().removeArmor(this);
+        }
+        //Equip new armor
         c.getEquipment().setArmor(this);
     }
 

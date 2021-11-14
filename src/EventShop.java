@@ -74,8 +74,11 @@ public class EventShop extends Event {
             case "Weapons":
                 ItemWeapon weapon = buyItemSelector(weapons, character);
                 ItemWeapon prevWeapon = character.getEquipment().getMainHand();
-                if (prevWeapon != null) {
-                    character.getCurrency().addGold(prevWeapon.getPrice() / 2);
+                if (weapon != null && prevWeapon != null) {
+                    //character.getCurrency().addGold(prevWeapon.getPrice() / 2);
+
+                    //Move previously equipped weapon to inventory
+                    character.getInventory().addWeapon(prevWeapon);
                 }
                 if (weapon != null) {
                     weapon.equip(character);
@@ -85,8 +88,11 @@ public class EventShop extends Event {
             case "Armors":
                 ItemArmor armor = buyItemSelector(armors, character);
                 ItemArmor prevArmor = character.getEquipment().getArmor();
-                if (prevArmor != null) {
-                    character.getCurrency().addGold(prevArmor.getPrice() / 2);
+                if (armor != null && prevArmor != null) {
+                    //character.getCurrency().addGold(prevArmor.getPrice() / 2);
+
+                    //Move previously equipped armor to inventory
+                    character.getInventory().addArmor(prevArmor);
                 }
                 if (armor != null) {
                     armor.equip(character);
@@ -121,22 +127,54 @@ public class EventShop extends Event {
 
     // generic method for choosing item to buy
     private <E extends Item> E buyItemSelector(List<E> items, Character character) {
+        boolean alreadyOwned;
         while (true) {
+            alreadyOwned = false; //Reset every loop
             E item = Input.getInputWithMenuBack(items, true);
             if (item == null) {
                 return null;
             }
 
-            // check sufficient level and gold before confirming purchase
-            if (item.getLevelRequirement() > character.getLevel().getLevel()) {
-                System.out.println("Insufficient level");
-            } else if (item.getPrice() > character.getCurrency().getGold()) {
-                System.out.println("Insufficient gold");
-            } else if (Input.getConfirm("Purchase " + item + " ?", Arrays.asList("Y", "y"))) {
-                items.remove(item);
-                return item;
+            // Check if hero already owns the weapon or armor piece that they are trying to buy
+            // First check equipped items
+            if (character.getEquipment().getMainHand() != null) {
+                if (item.getName().equals(character.getEquipment().getMainHand().getName())) {
+                    System.out.println("Hero already owns this weapon!");
+                    alreadyOwned = true;
+                }
+            }
+            if (character.getEquipment().getArmor() != null) {
+                if (item.getName().equals(character.getEquipment().getArmor().getName())) {
+                    System.out.println("Hero already owns this armor!");
+                    alreadyOwned = true;
+                }
+            }
+            // Next, check hero's inventory
+            if (character.getInventory().getWeapons() != null) {
+                if (character.getInventory().getWeapons().containsKey(item.getName())) {
+                    System.out.println("Hero already owns this weapon!");
+                    alreadyOwned = true;
+                }
+            }
+            if (character.getInventory().getArmor() != null) {
+                if (character.getInventory().getArmor().containsKey(item.getName())) {
+                    System.out.println("Hero already owns this armor!");
+                    alreadyOwned = true;
+                }
             }
 
+            // check sufficient level and gold before confirming purchase
+            // Check if weapon/armor is already owned
+            if (!alreadyOwned) {
+                if (item.getLevelRequirement() > character.getLevel().getLevel()) {
+                    System.out.println("Insufficient level");
+                } else if (item.getPrice() > character.getCurrency().getGold()) {
+                    System.out.println("Insufficient gold");
+                } else if (Input.getConfirm("Purchase " + item + " ? ", Arrays.asList("y", "n"))) {
+                    items.remove(item);
+                    return item;
+                }
+            }
         }
     }
 
