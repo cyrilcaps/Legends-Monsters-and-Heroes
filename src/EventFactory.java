@@ -36,19 +36,25 @@ public class EventFactory {
         return null;
     }
 
-    // create shop with 3 random items
+    // create shop - modified to include all available items
     private static Event marketGenerator() {
         List<ItemWeapon> weapons = new ArrayList<>();
         List<ItemArmor> armors = new ArrayList<>();
         List<Spell> spells = new ArrayList<>();
         List<ItemPotion> potions = new ArrayList<>();
-        IntStream.range(0, 3).forEach(i -> {
-            weapons.add(GlobalData.getRandom(GlobalData.getWeapons()));
-            armors.add(GlobalData.getRandom(GlobalData.getArmors()));
-            spells.add(GlobalData.getRandom(GlobalData.getSpells()));
-            potions.add(GlobalData.getRandom(GlobalData.getPotions()));
+//        armors.add(GlobalData.getRandom(GlobalData.getArmors()));
+//        spells.add(GlobalData.getRandom(GlobalData.getSpells()));
+//        potions.add(GlobalData.getRandom(GlobalData.getPotions()));
+        List<String> weaponNames = new ArrayList<>(GlobalData.getWeapons().keySet());
+        List<String> armorNames = new ArrayList<>(GlobalData.getArmors().keySet());
+        List<String> spellNames = new ArrayList<>(GlobalData.getSpells().keySet());
+        List<String> potionNames = new ArrayList<>(GlobalData.getPotions().keySet());
 
-        });
+        IntStream.range(0, GlobalData.getWeapons().size()).forEach(i -> weapons.add(GlobalData.getWeapons().get(weaponNames.get(i))));
+        IntStream.range(0, GlobalData.getArmors().size()).forEach(i -> armors.add(GlobalData.getArmors().get(armorNames.get(i))));
+        IntStream.range(0, GlobalData.getSpells().size()).forEach(i -> spells.add(GlobalData.getSpells().get(spellNames.get(i))));
+        IntStream.range(0, GlobalData.getPotions().size()).forEach(i -> potions.add(GlobalData.getPotions().get(potionNames.get(i))));
+
         return new EventShop(weapons, armors, spells, potions);
     }
 }

@@ -12,12 +12,13 @@ public class LegendsMonstersAndHeroes {
         System.out.println("Welcome! Please set-up your party.");
 
 
-        // get symbol
-        String symbol;
-        do {
-            symbol = Input.getString("Enter single character for your map symbol: ");
-        } while (symbol.length() != 1);
-        symbol = symbol.toUpperCase();
+        // Don't need to get symbol for this implementation
+        //Symbols are always H1, H2, H3 for the three heroes
+//        String symbol;
+//        do {
+//            symbol = Input.getString("Enter single character for your map symbol: ");
+//        } while (symbol.length() != 1);
+//        symbol = symbol.toUpperCase();
 
         // get color
         List<UtilPrintColors> colors = Arrays.asList(UtilPrintColors.RED,
@@ -26,44 +27,49 @@ public class LegendsMonstersAndHeroes {
                 UtilPrintColors.CYAN);
         List<String> colorStrings = colors.stream().map(c -> c + c.name() + UtilPrintColors.RESET)
                 .collect(Collectors.toList());
-        System.out.println("Choose color:");
+        System.out.println("Choose a display color for the heroes:");
         int selection = Input.getIntWithMenu(colorStrings, 1);
         UtilPrintColors color  = colors.get(selection);
 
-        // init party
-        Party party = new Party(symbol, color);
+        // init party - party class for each hero
 
-        int partyCount;
-        do {
-            partyCount = Input.getInt("Insert number of heroes (1-3):");
-        } while(partyCount == -1 || partyCount > 3);
+        System.out.println("Select three heroes!\n");
+        int partyCount = 3;
+        ArrayList<Party> heroParties = new ArrayList<>();
         Map<String, CharacterHero> heroes = new HashMap<>();
         while (heroes.size() < partyCount) {
+            System.out.println("Selecting hero " + (heroes.size() + 1) + "!");
             CharacterHero hero = heroSelector();
             if (hero != null) {
                 if (heroes.put(hero.getName(), hero) != null) {
-                    System.out.println(hero.getName() + " already in party.");
+                    System.out.println(hero.getName() + " has already been selected.");
                 } else {
+                    // Give heroes symbols H1, H2, H3
+                    Party party = new Party("H" + (heroes.size()), color);
                     party.addHero(hero);
+                    heroParties.add(party);
                 }
             }
         }
 
         // init world
         WorldGame game = new WorldGame();
-        game.addParty(party);
+        //Add 3 parties -> 3 heroes, to the map
+        for (Party heroParty : heroParties) {
+            game.addParty(heroParty);
+        }
         game.play();
 
         // good bye message
         System.out.println("\n************************************\n");
         System.out.println("Thank you for playing!");
         System.out.println("The world will remember the heroic efforts of your party:");
-        System.out.println("\tYou were victorious in " + party.getWins() + " out of " +
-                party.getCombats() + " battles.");
-        for (CharacterHero character : party.getHeroes().values()) {
-            System.out.println("\t" + Util.colorString(character.getType().getStringColor(), character.getName()
-                    + " " + character.getType().name() + " Lvl " + character.getLevel().getLevel()));
-        }
+        //TODO: Fix stats
+        //System.out.println("\tYou were victorious in " + party.getWins() + " out of " + party.getCombats() + " battles.");
+//        for (CharacterHero character : party.getHeroes().values()) {
+//            System.out.println("\t" + Util.colorString(character.getType().getStringColor(), character.getName()
+//                    + " " + character.getType().name() + " Lvl " + character.getLevel().getLevel()));
+//        }
     }
 
     private static CharacterHero heroSelector() {

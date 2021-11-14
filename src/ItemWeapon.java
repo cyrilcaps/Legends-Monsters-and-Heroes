@@ -14,6 +14,13 @@ public class ItemWeapon extends Item implements Equipable {
 
     @Override
     public void equip(Character c) {
+        if (c.getEquipment().getMainHand() != null) {
+            //Send old weapon from main hand to inventory
+            c.getInventory().addWeapon(c.getEquipment().getMainHand());
+            //Remove weapon currently in inventory to be added to main hand
+            c.getInventory().removeWeapon(this);
+        }
+        //Equip new weapon
         c.getEquipment().setMainHand(this);
     }
 
