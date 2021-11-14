@@ -4,6 +4,13 @@ import java.util.Map;
 public class Party {
     private final Map<String, CharacterHero> heroes = new HashMap<>();
     private final MapToken token;
+
+    // behavior variables
+    private MapBehavior behavior;
+    boolean hasMoved = false;
+    boolean hasAttacked = false;
+
+    // combat stats
     private int combats = 0;
     private int wins = 0;
 
@@ -17,6 +24,22 @@ public class Party {
 
     public MapToken getToken() {
         return token;
+    }
+
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
+    public boolean isHasAttacked() {
+        return hasAttacked;
+    }
+
+    public void setHasAttacked(boolean hasAttacked) {
+        this.hasAttacked = hasAttacked;
     }
 
     public void addCombat() {
