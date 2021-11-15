@@ -14,6 +14,10 @@ public class World {
         populateMap();
     }
 
+    public MapSquare getMapSquare(int x, int y) {
+        return map.getBoardSquare(x, y);
+    }
+
     // randomly populate map using weights
     private void populateMap() {
         // 20% non-accessible cells, 10% markets and 70% common cells

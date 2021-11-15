@@ -1,3 +1,3 @@
 public interface MapBehavior {
-    public ActionWorld action();
+    public ActionWorld action(Party party);
 }

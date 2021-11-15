@@ -9,7 +9,7 @@ public class EventInfo extends Event{
     public void enter(Party party) {
         //Only 1 hero per party so get the first hero
         //Line below IntelliJ warning: might be a suspicious call to 'Map.get'
-        CharacterHero character = party.getHeroes().get(party.getHeroes().keySet().toArray()[0]);
+        CharacterHero character = (CharacterHero) party.getCharacter();
         while (true) {
             System.out.println("Would you like to equip a weapon or an armor piece? ([0] to decline)");
             String equipSelect = Input.getInputWithMenuBack(Arrays.asList("Weapon", "Armor"), true);

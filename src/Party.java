@@ -1,14 +1,16 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Party {
-    private final Map<String, CharacterHero> heroes = new HashMap<>();
+    private final Map<String, Character> heroes = new HashMap<>();
     private final MapToken token;
 
     // behavior variables
+    private boolean monster;
     private MapBehavior behavior;
-    boolean hasMoved = false;
-    boolean hasAttacked = false;
+    private boolean hasMoved = false;
+    private boolean hasAttacked = false;
 
     // combat stats
     private int combats = 0;
@@ -18,12 +20,16 @@ public class Party {
         token = new MapToken(symbol, color);
     }
 
-    public Map<String, CharacterHero> getHeroes() {
+    public Map<String, Character> getHeroes() {
         return heroes;
     }
 
     public MapToken getToken() {
         return token;
+    }
+
+    public boolean isHero() {
+        return !monster;
     }
 
     public boolean isHasMoved() {
@@ -58,8 +64,12 @@ public class Party {
         return wins;
     }
 
-    public void addHero(CharacterHero hero) {
-        heroes.put(hero.getName(), hero);
+    public void addHero(Character character) {
+        heroes.put(character.getName(), character);
+    }
+
+    public Character getCharacter() {
+        return (new ArrayList<>(heroes.values())).get(0);
     }
 
     public ActionWorld move() {
@@ -85,9 +95,10 @@ public class Party {
                     "E/e: end turn\n" +
                     "Q/q: quit game\n" +
                     "Enter action: ");
+            int[] coordinates = new int[2];
             switch (input.toUpperCase()) {
                 case ("W"):
-                    int[] coordinates = new int[]{token.getCoordinates()[0] - 1, token.getCoordinates()[1]};
+                    coordinates = new int[]{token.getCoordinates()[0] - 1, token.getCoordinates()[1]};
                     return new ActionWorld(ActionMapType.MOVE, coordinates);
                 case ("A"):
                     coordinates = new int[]{token.getCoordinates()[0], token.getCoordinates()[1] - 1};
@@ -117,7 +128,11 @@ public class Party {
                     coordinates = new int[2];
                     return new ActionWorld(ActionMapType.NONE, coordinates);
                 case("X"):
-                    //Attack, includes weapon and spell
+                    // attack
+                    return new ActionWorld(ActionMapType.ATTACK, coordinates);
+                case("C"):
+                    // spell
+                    return new ActionWorld(ActionMapType.SPELL, coordinates);
                 case("P"):
                     //Potion
                 case("T"):
@@ -131,7 +146,7 @@ public class Party {
     }
 
     private void printHeroes() {
-        for (CharacterHero hero : heroes.values()) {
+        for (Character hero : heroes.values()) {
             System.out.println(hero);
         }
     }

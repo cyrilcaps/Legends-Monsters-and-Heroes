@@ -21,28 +21,12 @@ public class CombatPlayer implements CombatBehavior {
                     action.setDamage(character.getDamage());
                     break;
                 case SPELL: // spell
-                    Spell spell = spellSelector(character.getSpells(), character.getStats().getMana());
-                    if (spell == null) {
+                    ActionCombat spellAction = castSpell(targets, character);
+                    if (spellAction == null) {
                         // go back to attack selection
                         continue;
                     }
-
-                    // select target
-                    Character target = targetSelector(targets);
-                    if (target == null) {
-                        // go back to attack selection
-                        continue;
-                    }
-
-                    // populate action
-                    action.setType(ActionCombatType.SPELL);
-                    action.setDamage(spell.getDamage(character.getStats().getDexterity()));
-                    action.setManaCost(spell.getManaCost());
-                    action.setTargetName(target.getName());
-
-                    // cast spell on target
-                    spell.cast(character, target);
-                    return action;
+                    return spellAction;
                 case USE: // potion
                     action.setType(ActionCombatType.USE);
                     ItemPotion potion = potionSelector(character);
@@ -71,6 +55,32 @@ public class CombatPlayer implements CombatBehavior {
         return action;
     }
 
+    public ActionCombat castSpell(List<Character> targets, Character character) {
+        ActionCombat action = new ActionCombat();
+        Spell spell = spellSelector(character.getSpells(), character.getStats().getMana());
+        if (spell == null) {
+            // go back to attack selection
+            return null;
+        }
+
+        // select target
+        Character target = targetSelector(targets);
+        if (target == null) {
+            // go back to attack selection
+            return null;
+        }
+
+        // populate action
+        action.setType(ActionCombatType.SPELL);
+        action.setDamage(spell.getDamage(character.getStats().getDexterity()));
+        action.setManaCost(spell.getManaCost());
+        action.setTargetName(target.getName());
+
+        // cast spell on target
+        spell.cast(character, target);
+        return action;
+    }
+
     // select spell if available and sufficient mana, or input 0 to choose different action
     private Spell spellSelector(List<Spell> spells, int mana) {
         if (spells.isEmpty()) {
@@ -93,16 +103,16 @@ public class CombatPlayer implements CombatBehavior {
         return spell;
     }
 
-    // select target (monster) to attack, or input 0 to choose different action
-    private Character targetSelector(List<Character> targets) {
-        List<Character> validTarget = targets.stream().filter(character ->
-                !character.isFainted()).collect(Collectors.toList());
-        return Input.getInputWithMenuBack(validTarget, true);
-    }
-
     // select potion to use from inventory
     private ItemPotion potionSelector(Character character) {
         return Input.getInputWithMenuBack(
                 new ArrayList<>(character.getInventory().getPotions().values()), true);
+    }
+
+    // select target (monster) to attack, or input 0 to choose different action
+    public static Character targetSelector(List<Character> targets) {
+        List<Character> validTarget = targets.stream().filter(character ->
+                !character.isFainted()).collect(Collectors.toList());
+        return Input.getInputWithMenuBack(validTarget, true);
     }
 }

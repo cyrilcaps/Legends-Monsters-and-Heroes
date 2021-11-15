@@ -10,8 +10,16 @@ public class TurnBasedManager<E> implements Iterator<E> {
 
     }
 
+    public List<List<E>> getTeams() {
+        return teams;
+    }
+
     public void addTeam(List<E> team) {
         teams.add(team);
+    }
+
+    public int getSelector() {
+        return selector;
     }
 
     @Override
