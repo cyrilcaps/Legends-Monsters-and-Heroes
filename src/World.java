@@ -16,28 +16,94 @@ public class World {
 
     // randomly populate map using weights
     private void populateMap() {
-        // 20% non-accessible cells, 10% markets and 70% common cells
+        // 20% of each special cells, 40% plain and the rest is inaccessable(16 cells) and nexus(12 cells).
         int totalSize = size * size;
-        int inaccessible = (int) (totalSize * 0.2);
-        int markets = (int) (totalSize * 0.1);
-        int common = totalSize - inaccessible - markets;
+        int inaccessable = totalSize/4;
+        int nexus = (size/4 )* 3;
+        totalSize -= inaccessable + nexus;
+        int plain = (int) (totalSize * 0.4);
+        int bush = (int) (totalSize * 0.2);
+        int cave = (int) (totalSize * 0.2);
+        int koulou = (int) (totalSize * 0.2);
 
         // randomize list with possible squares
         List<MapSquare> mapSquares = new ArrayList<>();
-        IntStream.range(0, inaccessible).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.INACCESSIBLE)));
-        IntStream.range(0, markets).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.MARKET)));
-        IntStream.range(0, common).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.COMMON)));
+        IntStream.range(0, plain).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.PLAIN)));
+        IntStream.range(0, bush).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.BUSH)));
+        IntStream.range(0, cave).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.CAVE)));
+        IntStream.range(0, koulou).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.KOULOU)));
+      
 
-
-        // shuffle list, set squares, repeat if invalid
-        do {
+        // shuffle squares and 
+        
             Collections.shuffle(mapSquares);
+            int count = 0;
+            //count is the pointer for mapSquares.
             for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    map.setBoardSquare(i, j, mapSquares.get(i * size + j));
+                if(i==0){
+                    //take care of the first row - monster nexus
+                    for (int j = 0; j < 2; j++) {
+                        map.setBoardSquare(i, j, new MapSquare(MapSquareType.MONSTERNEXUS));
+                    }
+    
+                    map.setBoardSquare(i, 2, new MapSquare(MapSquareType.INACCESSIBLE));
+                    
+    
+                    for (int j = 3; j < 5; j++) {
+                        map.setBoardSquare(i, j, new MapSquare(MapSquareType.MONSTERNEXUS));
+                    }
+    
+                    map.setBoardSquare(i, 5, new MapSquare(MapSquareType.INACCESSIBLE));
+                  
+    
+                    for (int j = 6; j < size; j++) {
+                        map.setBoardSquare(i, j, new MapSquare(MapSquareType.MONSTERNEXUS));
+                    }
+
+                }else if(i == size-1){
+                    //take care of the hero nexus
+                    for (int j = 0; j < 2; j++) {
+                        map.setBoardSquare(i, j, new MapSquare(MapSquareType.HERONEXUS));
+                    }
+    
+                    map.setBoardSquare(i, 2, new MapSquare(MapSquareType.INACCESSIBLE));
+                    
+    
+                    for (int j = 3; j < 5; j++) {
+                        map.setBoardSquare(i, j, new MapSquare(MapSquareType.HERONEXUS));
+                    }
+    
+                    map.setBoardSquare(i, 5, new MapSquare(MapSquareType.INACCESSIBLE));
+                  
+    
+                    for (int j = 6; j < size; j++) {
+                        map.setBoardSquare(i, j, new MapSquare(MapSquareType.HERONEXUS));
+                    }
+                }else{
+                    // for the rest of the rows
+                    for (int j = 0; j < 2; j++) {
+                    map.setBoardSquare(i, j, mapSquares.get(count));
+                    count++;
+                }
+
+                map.setBoardSquare(i, 2, new MapSquare(MapSquareType.INACCESSIBLE));
+                
+
+                for (int j = 3; j < 5; j++) {
+                    map.setBoardSquare(i, j, mapSquares.get(count));
+                    count++;
+                }
+
+                map.setBoardSquare(i, 5, new MapSquare(MapSquareType.INACCESSIBLE));
+              
+
+                for (int j = 6; j < size; j++) {
+                    map.setBoardSquare(i, j, mapSquares.get(count));
+                    count++;
                 }
             }
-        } while (!validate());
+            }
+       
     }
 
     // basic check that each squares has ONE possible move
@@ -97,9 +163,9 @@ public class World {
 
         // move symbol from old square to new square
         map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1])
-                .unoccupy();
+                .unoccupy(token);
         map.getBoardSquare(newRow, newCol)
-                .occupy(token.toString());
+                .occupy(token);
         token.setCoordinates(new int[]{newRow, newCol});
 
         // determine event
@@ -108,6 +174,28 @@ public class World {
 
     // print map
     public void printMap() {
-        map.printBoard(false);
+        //map.printBoard(false);
+
+        for(int i = 0; i<size; i++){
+            
+            for(int count = 0; count < 3; count ++){
+                StringBuilder rowbuild = new StringBuilder();
+                if(count ==0 || count == 2){
+                    for(int j = 0; j < size; j++){
+                        String symbol = map.getBoardSquare(i, j).getType().getSymbol();
+                        rowbuild.append(" "+symbol+"-").append(symbol+"-").append(symbol+"  ");
+
+                    }
+                }else{
+                    for(int j = 0; j < size; j++){
+                        String content = map.getBoardSquare(i, j).toString();
+                        rowbuild.append("|").append(content).append("| ");
+                    }
+                }
+                System.out.println(rowbuild.toString());
+                
+            }
+            System.out.println();
+        }
     }
 }

@@ -3,6 +3,7 @@ import java.util.Arrays;
 public class MapToken {
     private int[] coordinates = new int[2];
     private String symbol;
+    // for Valor, the token is H1, H2, H3 and M1, M2, M3.
     private UtilPrintColors color;
 
     public MapToken() {

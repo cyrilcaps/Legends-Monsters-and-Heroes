@@ -1,8 +1,8 @@
 public enum MapSquareType {
     PLAIN("P", UtilPrintColors.RESET),
-    INACCESSIBLE("X", UtilPrintColors.GREEN),
-    MONSTERNEXUS("N", UtilPrintColors.RED),
-    HERONEXUS("N", UtilPrintColors.RED),
+    INACCESSIBLE("X", UtilPrintColors.RED),
+    MONSTERNEXUS("N", UtilPrintColors.GREEN),
+    HERONEXUS("N", UtilPrintColors.GREEN),
     BUSH("B", UtilPrintColors.CYAN),
     CAVE("C", UtilPrintColors.PURPLE),
     KOULOU("K", UtilPrintColors.YELLOW);
