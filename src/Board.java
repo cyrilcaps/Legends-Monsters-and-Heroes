@@ -59,6 +59,8 @@ public class Board <T extends BoardSquare> {
     public void printBoard(boolean headers) {
         System.out.println();
 
+    
+   
         String leftBuffer = "";
         if (headers) {
             leftBuffer = "  ";
@@ -81,5 +83,7 @@ public class Board <T extends BoardSquare> {
             System.out.println(printRow);
             System.out.println(getFillerRow(size, leftBuffer));
         }
+
+        
     }
 }

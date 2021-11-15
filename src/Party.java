@@ -120,6 +120,9 @@ public class Party {
                     //Attack, includes weapon and spell
                 case("P"):
                     //Potion
+                    coordinates = new int[2];
+                    new EventPotion(this); //Info menu for user to use a potion
+                    return new ActionWorld(ActionMapType.NONE, coordinates);
                 case("T"):
                     //Teleport
                 case("B"):

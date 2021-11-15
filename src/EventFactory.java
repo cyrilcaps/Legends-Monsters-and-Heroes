@@ -5,9 +5,9 @@ import java.util.stream.IntStream;
 public class EventFactory {
     public static Event generateEvent(MapSquareType type, List<Character> heroes) {
         switch (type) {
-            case COMMON:
+            case PLAIN:
                 return commonGenerator(heroes);
-            case MARKET:
+            case HERONEXUS:
                 return marketGenerator();
             case INACCESSIBLE:
             default:
