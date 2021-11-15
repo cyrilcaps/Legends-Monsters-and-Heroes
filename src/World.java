@@ -14,6 +14,10 @@ public class World {
         populateMap();
     }
 
+    public MapSquare getMapSquare(int x, int y) {
+        return map.getBoardSquare(x, y);
+    }
+
     // randomly populate map using weights
     private void populateMap() {
         // 20% of each special cells, 40% plain and the rest is inaccessable(16 cells) and nexus(12 cells).
