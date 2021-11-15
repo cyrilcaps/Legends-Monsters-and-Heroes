@@ -10,7 +10,7 @@ public class EventPotion extends Event {
     public void enter(Party party) {
         //Only 1 hero per party so get the first hero
         //Line below IntelliJ warning: might be a suspicious call to 'Map.get'
-        CharacterHero character = party.getHeroes().get(party.getHeroes().keySet().toArray()[0]);
+        Character character = party.getHeroes().get(party.getHeroes().keySet().toArray()[0]);
         if (character.getInventory().getPotions().size() != 0) {
             Set<String> potionNames = character.getInventory().getPotions().keySet();
             String selectedPotionName = (String) Input.getInputWithMenuBack(Arrays.asList(potionNames.toArray()), true);
