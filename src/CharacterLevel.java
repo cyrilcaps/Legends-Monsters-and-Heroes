@@ -6,6 +6,9 @@ public class CharacterLevel {
     public CharacterLevel(int level, int experience) {
         this.level = level;
         this.experience = experience;
+        //Check the next level before processing current experience and after
+        //Prevents heroes from starting at level 2
+        this.nextLevel = calculateNextLevel();
         processExperience();
         this.nextLevel = calculateNextLevel();
     }

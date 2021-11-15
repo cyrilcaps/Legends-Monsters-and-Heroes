@@ -25,8 +25,8 @@ public class World {
         // randomize list with possible squares
         List<MapSquare> mapSquares = new ArrayList<>();
         IntStream.range(0, inaccessible).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.INACCESSIBLE)));
-        IntStream.range(0, markets).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.MARKET)));
-        IntStream.range(0, common).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.COMMON)));
+        IntStream.range(0, markets).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.HERONEXUS)));
+        IntStream.range(0, common).forEach(i -> mapSquares.add(new MapSquare(MapSquareType.PLAIN)));
 
 
         // shuffle list, set squares, repeat if invalid
