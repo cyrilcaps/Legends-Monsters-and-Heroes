@@ -65,6 +65,7 @@ public class WorldGame extends Game {
                 // Next turn if:
                 // Hero ends turn
                 // Forced to end turn if: attacked or moved
+                // Still in progress
                 if (turnEnded) {
                     party = turnBasedManager.next();
                 }
