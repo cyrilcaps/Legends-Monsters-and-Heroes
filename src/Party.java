@@ -135,6 +135,9 @@ public class Party {
                     return new ActionWorld(ActionMapType.SPELL, coordinates);
                 case("P"):
                     //Potion
+                    coordinates = new int[2];
+                    new EventPotion(this); //Info menu for user to use a potion
+                    return new ActionWorld(ActionMapType.NONE, coordinates);
                 case("T"):
                     //Teleport
                 case("B"):

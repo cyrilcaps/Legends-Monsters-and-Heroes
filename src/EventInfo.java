@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class EventInfo extends Event{
+public class EventInfo extends Event {
 
     public EventInfo(Party party) {
         enter(party);
