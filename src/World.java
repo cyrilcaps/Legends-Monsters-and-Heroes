@@ -154,17 +154,38 @@ public class World {
 
     // try to move token to valid square, true is success, false if invalid
     public boolean move(MapToken token, int newRow, int newCol) {
+
         // check next square valid
         if(!map.isValid(newRow, newCol)) {
             System.out.println("invalid");
             return false;
         }
+        
+        MapSquare des = map.getBoardSquare(newRow, newCol);
 
-        // check new square occupied
-        if (map.getBoardSquare(newRow, newCol).getType().equals(MapSquareType.INACCESSIBLE)) {
+        if (des.getType().equals(MapSquareType.INACCESSIBLE)) {
+            System.out.println("Inaccessable position!");
             return false;
         }
 
+        // check new square occupied by the same type of character
+        if(des.isFull()){
+            //System.out.println("The cells is already full!");
+            return false;
+
+        }else{  // there is 0 or 1 character in the cell
+            if(token.getSymbol().charAt(0) == 'H'){
+                if(des.getHero().size()>0){
+                    System.out.println("Already a hero in the position!");
+                    return false;
+                }
+            }else{
+                if(des.getMonster().size()>0){
+                    return false;
+                }
+            }
+
+        }
         // move symbol from old square to new square
         map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1])
                 .unoccupy(token);
