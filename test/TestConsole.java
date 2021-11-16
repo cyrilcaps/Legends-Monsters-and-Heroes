@@ -41,7 +41,7 @@ public class TestConsole {
     public static void marketTest() {
         Party party = new Party("S", UtilPrintColors.RED);
         party.addHero(GlobalData.getRandom(GlobalData.getHeroes(CharacterHeroType.WARRIOR)));
-        Event market = EventFactory.generateEvent(MapSquareType.MARKET, new ArrayList<>(party.getHeroes().values()));
+        Event market = EventFactory.generateEvent(MapSquareType.HERONEXUS, new ArrayList<>(party.getHeroes().values()));
         market.enter(party);
     }
 }

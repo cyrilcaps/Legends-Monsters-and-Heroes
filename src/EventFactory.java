@@ -6,7 +6,7 @@ public class EventFactory {
     public static Event generateEvent(MapSquareType type, List<Character> heroes) {
         switch (type) {
             case PLAIN:
-                return commonGenerator(heroes);
+                return null;
             case HERONEXUS:
                 return marketGenerator();
             case INACCESSIBLE:
@@ -16,6 +16,7 @@ public class EventFactory {
         return null;
     }
 
+    // TODO: factory should have easy way to disable combat generators
     // 50-50 chance of combat or nothing
     private static Event commonGenerator(List<Character> heroes) {
         int averageLevel = heroes.stream().mapToInt(c -> c.getLevel().getLevel()).sum() / heroes.size();

@@ -147,6 +147,34 @@ public class World {
         }
     }
 
+    /*
+    Place token on hero nexus
+     */
+    public void spawnTokenHeroNexus(MapToken token, int lane) {
+        boolean valid = false;
+        while(!valid) {
+            int row = 7;
+            int col = lane * 3 + (int) (Math.random() * 2);
+            valid = move(token, row, col);
+            token.getCoordinates()[0] = row;
+            token.getCoordinates()[1] = col;
+        }
+    }
+
+    /*
+    Place token on monster nexus
+     */
+    public boolean spawnTokenMonsterNexus(MapToken token, int lane) {
+        int row = 0;
+        int col = lane * 3 + (int) (Math.random() * 2);
+        boolean valid = move(token, row, col);
+        if (valid) {
+            token.getCoordinates()[0] = row;
+            token.getCoordinates()[1] = col;
+        }
+        return valid;
+    }
+
     // get square of token's location
     public MapSquare getMapSquare(MapToken token) {
         return map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);

@@ -12,9 +12,24 @@ public class WorldGame extends Game {
     public WorldGame() {
     }
 
+
     public void addParty(Party party) {
-        world.spawnToken(party.getToken());
         partyList.add(party);
+        parties.put(party.getToken().getSymbol(), party);
+    }
+
+    public void addHero(Party party, int lane) {
+        world.spawnTokenHeroNexus(party.getToken(), lane);
+        addParty(party);
+    }
+
+    public void addMonster(Party party, int lane) {
+        boolean valid = world.spawnTokenMonsterNexus(party.getToken(), lane);
+        if (!valid) {
+            System.out.println("Could not add monster, monster nexus is full?");
+            return;
+        }
+        addParty(party);
     }
 
     @Override
@@ -166,7 +181,7 @@ public class WorldGame extends Game {
         for (int i = tokenX - range ; i < tokenX + range; i++) {
             for (int j = tokenY - range; j < tokenY + range; j++) {
                 MapSquare square = world.getMapSquare(i, j);
-                String name = square.getOccupier();
+                String name = square.getOccupier().get(0).getSymbol();
 
                 for (Character character : parties.get(name).getHeroes().values()) {
                     if (getMonsters) {
