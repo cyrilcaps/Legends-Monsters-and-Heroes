@@ -1,11 +1,13 @@
 public class EventTeleport extends Event {
     private int row;
     private int col;
+    private final MapToken tokenIn; //Token of the hero that is teleporting
 
-    public EventTeleport(Party party) {
+    public EventTeleport(Party party, MapToken currentToken) {
         //Default -1: unchanged if teleport is not valid
         this.row = -1;
         this.col = -1;
+        this.tokenIn = currentToken;
         enter(party);
     }
 
@@ -25,8 +27,11 @@ public class EventTeleport extends Event {
         this.col = col;
     }
 
+    public MapToken getTokenIn() { return tokenIn; }
+
     public void enter(Party party) {
         Character character = party.getHeroes().get(party.getHeroes().keySet().toArray()[0]);
+        //Instructions
         System.out.println("To teleport, please enter a row and a column.\nRows are listed from top to bottom:" +
                 "\n\t-Row 1 is at the top of the map\n\t-Row 8 is at the bottom\nColumns are listed from left to right:" +
                 "\n\t-Column 1 is at the left of the map\n\t-Column 8 is at the right\nKeep in mind that a hero " +
@@ -36,6 +41,7 @@ public class EventTeleport extends Event {
         boolean colValid = false;
         String row_num = null;
         String col_num = null;
+        //Make user input row and column until input is valid
         while (!rowValid) {
             row_num = Input.getString("Enter a row: ");
             rowValid = checkIfValidInt(row_num);
@@ -45,6 +51,7 @@ public class EventTeleport extends Event {
             colValid = checkIfValidInt(col_num);
         }
 
+        //Strings will convert without error because of previous error checking
         checkTP(Integer.parseInt(row_num), Integer.parseInt(col_num));
     }
 
@@ -61,7 +68,7 @@ public class EventTeleport extends Event {
         }
 
         if (isInteger) {
-            if (str_to_int < 0 || str_to_int > 8) { //Rows/cols are 1-8
+            if (str_to_int < 1 || str_to_int > 8) { //Rows/cols are 1-8
                 isInRange = false;
             }
         }
@@ -76,7 +83,7 @@ public class EventTeleport extends Event {
         //Check if move is valid, check if space is inaccessible -> already done in World.java
 
         //Check if a hero is able to teleport there (based on position of all heroes)
-        //TODO, add position data member for each hero?
+        //TODO
 
         //If valid, save to data members to be retrieved
         this.setRow(row_num);
