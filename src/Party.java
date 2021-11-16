@@ -140,22 +140,30 @@ public class Party {
                     return new ActionWorld(ActionMapType.NONE, coordinates);
                 case("T"):
                     //Teleport
-                    EventTeleport teleport = new EventTeleport(this); //Menu for a user to teleport
+                    EventTeleport teleport = new EventTeleport(this, token); //Menu for a user to teleport
                     int row = teleport.getRow();
                     int col = teleport.getCol();
                     if (row != -1 && col != -1) {
                         System.out.println("Teleport was successful!");
                         coordinates = new int[]{row - 1, col - 1};
+                        return new ActionWorld(ActionMapType.MOVE, coordinates);
                     }
                     else {
                         System.out.println("Teleport was unsuccessful.");
                         coordinates = new int[2];
+                        return new ActionWorld(ActionMapType.NONE, coordinates);
                     }
-                    return new ActionWorld(ActionMapType.MOVE, coordinates);
                 case("B"):
                     //Back to nexus (for now, to the bottom of the map)
-                    coordinates = new int[]{7, token.getCoordinates()[1]};
-                    return new ActionWorld(ActionMapType.MOVE, coordinates);
+                    if (token.getCoordinates()[0] != 7) {
+                        coordinates = new int[]{7, token.getCoordinates()[1]};
+                        return new ActionWorld(ActionMapType.MOVE, coordinates);
+                    }
+                    else {
+                        System.out.println("Hero is already at their nexus.");
+                        coordinates = new int[2];
+                        return new ActionWorld(ActionMapType.NONE, coordinates);
+                    }
             }
         }
     }
