@@ -22,6 +22,10 @@ public class CharacterStats {
     private boolean burn;
     private boolean electrocute;
 
+    private boolean inBush;
+    private boolean inCave;
+    private boolean inKoulou;
+
     public CharacterStats() {
     }
 
@@ -160,6 +164,27 @@ public class CharacterStats {
         freeze = false;
         burn = false;
         electrocute = false;
+    }
+
+    public void cellBuffs(MapSquareType cell){
+        switch(cell){
+            case BUSH:
+                inBush = true;
+                break;
+            case CAVE:
+                inCave = true;
+                break;
+            case KOULOU:
+                inKoulou = true;
+                break;
+        }
+    }
+
+    //remove buff that's gained from different cell type
+    public void removeBuffs(){
+        inBush = false;
+        inCave = false;
+        inKoulou = false;
     }
 
     // preferences for stat growth
