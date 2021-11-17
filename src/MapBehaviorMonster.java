@@ -1,7 +1,7 @@
 public class MapBehaviorMonster implements MapBehavior {
     @Override
     public ActionWorld action(Party party) {
-        // 1st option = move
+        // 1st option = move down
         if (!party.isHasMoved()) {
             MapToken token = party.getToken();
             int[] coordinates = new int[]{token.getCoordinates()[0] + 1, token.getCoordinates()[1]};

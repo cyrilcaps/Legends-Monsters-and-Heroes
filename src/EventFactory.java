@@ -21,18 +21,8 @@ public class EventFactory {
     private static Event commonGenerator(List<Character> heroes) {
         int averageLevel = heroes.stream().mapToInt(c -> c.getLevel().getLevel()).sum() / heroes.size();
         if (Math.random() <= 0.5) {
-            // return new combat
-            List<Character> monsters = new ArrayList<>();
-            IntStream.range(0, heroes.size()).forEach(i -> {
-                while (true) {
-                    CharacterMonster monster = GlobalData.getRandom(GlobalData.getMonsters());
-                    if (monster.getLevel().getLevel() <= averageLevel) {
-                        monsters.add(monster);
-                        break;
-                    }
-                }
-            });
-            return new EventCombat(monsters);
+            // return new combat with monsters
+            return new EventCombat(CharacterFactory.generateMonster(averageLevel, heroes.size()));
         }
         return null;
     }

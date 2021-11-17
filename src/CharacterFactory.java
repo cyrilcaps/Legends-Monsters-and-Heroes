@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
 public class CharacterFactory {
     // when reading from file - Name/mana/strength/agility/dexterity/starting money/starting experience
     public static CharacterHero generateHero(CharacterHeroType type, String[] vals) {
@@ -53,5 +57,19 @@ public class CharacterFactory {
                         Integer.parseInt(vals[4]));
         }
         return null;
+    }
+
+    public static List<Character> generateMonster(int averageLevel, int numMonsters) {
+        List<Character> monsters = new ArrayList<>();
+        IntStream.range(0, numMonsters).forEach(i -> {
+            while (true) {
+                CharacterMonster monster = GlobalData.getRandom(GlobalData.getMonsters());
+                if (monster.getLevel().getLevel() <= averageLevel) {
+                    monsters.add(monster);
+                    break;
+                }
+            }
+        });
+        return monsters;
     }
 }

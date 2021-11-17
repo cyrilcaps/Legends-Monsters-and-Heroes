@@ -4,6 +4,7 @@ public class TurnBasedManager<E> implements Iterator<E> {
     // allow teams
     private final List<List<E>> teams = new ArrayList<>();
     private int selector = -1;
+    private int round = -1;
     private boolean exit;
 
     public TurnBasedManager() {
@@ -22,6 +23,10 @@ public class TurnBasedManager<E> implements Iterator<E> {
         return selector;
     }
 
+    public int getRound() {
+        return round;
+    }
+
     @Override
     public boolean hasNext() {
         return !teams.isEmpty();
@@ -33,6 +38,11 @@ public class TurnBasedManager<E> implements Iterator<E> {
 
         // select team
         int team = selector % teams.size();
+
+        // increment round when team 0 goes
+        if (team == 0) {
+            round += 1;
+        }
 
         // select player in team
         int player = team/teams.size() % teams.get(team).size();

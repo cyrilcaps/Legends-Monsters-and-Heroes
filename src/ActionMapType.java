@@ -3,6 +3,7 @@ public enum ActionMapType {
     SPELL,
     END,
     MOVE,
+    MAP,
     NONE,
     QUIT
 }

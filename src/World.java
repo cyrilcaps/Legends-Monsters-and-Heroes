@@ -167,6 +167,7 @@ public class World {
     public boolean spawnTokenMonsterNexus(MapToken token, int lane) {
         int row = 0;
         int col = lane * 3 + (int) (Math.random() * 2);
+        System.out.println(row + ", " + col + " " + token.getSymbol());
         boolean valid = move(token, row, col);
         if (valid) {
             token.getCoordinates()[0] = row;
