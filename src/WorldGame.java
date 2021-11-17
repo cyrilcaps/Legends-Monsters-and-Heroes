@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WorldGame extends Game {
     private final World world = new World(8);
@@ -12,9 +9,24 @@ public class WorldGame extends Game {
     public WorldGame() {
     }
 
+
     public void addParty(Party party) {
-        world.spawnToken(party.getToken());
         partyList.add(party);
+        parties.put(party.getToken().getSymbol(), party);
+    }
+
+    public void addHero(Party party, int lane) {
+        world.spawnTokenHeroNexus(party.getToken(), lane);
+        addParty(party);
+    }
+
+    public void addMonster(Party party, int lane) {
+        boolean valid = world.spawnTokenMonsterNexus(party.getToken(), lane);
+        if (!valid) {
+            System.out.println("Could not add monster, monster nexus is full?");
+            return;
+        }
+        addParty(party);
     }
 
     @Override
@@ -25,21 +37,43 @@ public class WorldGame extends Game {
             turnBasedManager.addTeam(oneHeroParty);
         }
 
-        // game start
-        world.printMap();
-
+        // boolean for start of turn actions
         boolean start = true;
+        int monsterRound = 0;
+
+        // start turn based
         Party party = turnBasedManager.next();
         while (turnBasedManager.hasNext()) {
-            // heroes, start of round - respawn or recover
-            if (start && party.isHero()) {
-                if (party.getCharacter().isFainted()) {
-                    // perform back action for free
-                    party.getCharacter().getStats().addHealth(party.getCharacter().getStats().getMaxHealth() / 2);
-                } else {
-                    // recover some health/mana
-                    ((CharacterHero) party.getCharacter()).recover();
+            // turn start
+            if (start) {
+                // spawn monsters every 7 rounds and on start
+                if (turnBasedManager.getRound() == monsterRound) {
+                    for (int i = 0; i < 3; i++) {
+                        Party monsterParty = new Party("M" + (i + 1), UtilPrintColors.RED_BOLD_BRIGHT);
+                        monsterParty.setMonster(true);
+                        monsterParty.addHero(CharacterFactory.generateMonster(1, 1).get(0));
+                        monsterParty.setBehavior(new MapBehaviorMonster());
+                        addMonster(monsterParty, i);
+
+                        turnBasedManager.addTeam(Collections.singletonList(monsterParty));
+                    }
+                    monsterRound += 7;
                 }
+
+                // heroes, start of round - respawn or recover
+                if (party.isHero()) {
+                    if (party.getCharacter().isFainted()) {
+                        // perform back action for free
+                        party.getCharacter().getStats().addHealth(party.getCharacter().getStats().getMaxHealth() / 2);
+                        world.spawnTokenHeroNexus(party.getToken(), 0);
+                    } else {
+                        // recover some health/mana
+                        ((CharacterHero) party.getCharacter()).recover();
+                    }
+                }
+
+                // print map after start of turn actions
+                world.printMap();
             }
             start = false;
 
@@ -58,6 +92,11 @@ public class WorldGame extends Game {
                         valid = world.move(party.getToken(), action.getCoordinates()[0], action.getCoordinates()[1]);
                         if (valid) {
                             party.setHasMoved(true);
+                        } else {
+                            // invalid move for monster = done moving
+                            if (!party.isHero()) {
+                                party.setHasMoved(true);
+                            }
                         }
                     } else {
                         System.out.println("You have already moved!");
@@ -69,6 +108,9 @@ public class WorldGame extends Game {
                 case SPELL:
                     cast(party);
                     break;
+                case MAP:
+                    world.printMap();
+                    break;
                 case NONE:
                     break;
                 case QUIT:
@@ -76,7 +118,7 @@ public class WorldGame extends Game {
             }
 
             // print new location
-            world.printMap();
+//            world.printMap();
 
             // resolve new square - market or common
             if (valid) {
@@ -90,7 +132,7 @@ public class WorldGame extends Game {
                     event.enter(party);
 
                     // print location
-                    world.printMap();
+//                    world.printMap();
                 }
             }
 
@@ -128,6 +170,8 @@ public class WorldGame extends Game {
             Character target = targets.get(0);
             if (party.isHero()) {
                 target = CombatPlayer.targetSelector(targets);
+            } else {
+                party.setHasAttacked(true);
             }
 
             // apply damage to target
@@ -166,16 +210,18 @@ public class WorldGame extends Game {
         for (int i = tokenX - range ; i < tokenX + range; i++) {
             for (int j = tokenY - range; j < tokenY + range; j++) {
                 MapSquare square = world.getMapSquare(i, j);
-                String name = square.getOccupier();
 
-                for (Character character : parties.get(name).getHeroes().values()) {
-                    if (getMonsters) {
-                        if (character instanceof CharacterMonster) {
-                            characters.add(character);
-                        }
-                    } else {
-                        if (character instanceof CharacterHero) {
-                            characters.add(character);
+                if (!square.getOccupier().isEmpty()) {
+                    String name = square.getOccupier().get(0).getSymbol();
+                    for (Character character : parties.get(name).getHeroes().values()) {
+                        if (getMonsters) {
+                            if (character instanceof CharacterMonster) {
+                                characters.add(character);
+                            }
+                        } else {
+                            if (character instanceof CharacterHero) {
+                                characters.add(character);
+                            }
                         }
                     }
                 }

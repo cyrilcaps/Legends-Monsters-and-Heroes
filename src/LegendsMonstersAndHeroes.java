@@ -55,8 +55,9 @@ public class LegendsMonstersAndHeroes {
         // init world
         WorldGame game = new WorldGame();
         //Add 3 parties -> 3 heroes, to the map
+        int lane = 0;
         for (Party heroParty : heroParties) {
-            game.addParty(heroParty);
+            game.addHero(heroParty, lane++);
         }
         game.play();
 

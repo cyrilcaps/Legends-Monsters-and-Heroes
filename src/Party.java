@@ -7,7 +7,7 @@ public class Party {
     private final MapToken token;
 
     // behavior variables
-    private boolean monster;
+    private boolean monster = false;
     private MapBehavior behavior;
     private boolean hasMoved = false;
     private boolean hasAttacked = false;
@@ -30,6 +30,14 @@ public class Party {
 
     public boolean isHero() {
         return !monster;
+    }
+
+    public void setMonster(boolean monster) {
+        this.monster = monster;
+    }
+
+    public void setBehavior(MapBehavior behavior) {
+        this.behavior = behavior;
     }
 
     public boolean isHasMoved() {
@@ -73,6 +81,10 @@ public class Party {
     }
 
     public ActionWorld move() {
+        if (behavior != null) {
+            return behavior.action(this);
+        }
+
         while (true) {
             /*
                 W/w: move up
@@ -126,7 +138,7 @@ public class Party {
                 case("M"):
                     //Show the map
                     coordinates = new int[2];
-                    return new ActionWorld(ActionMapType.NONE, coordinates);
+                    return new ActionWorld(ActionMapType.MAP, coordinates);
                 case("X"):
                     // attack
                     return new ActionWorld(ActionMapType.ATTACK, coordinates);
