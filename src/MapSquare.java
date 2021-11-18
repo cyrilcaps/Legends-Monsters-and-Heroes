@@ -77,10 +77,10 @@ public class MapSquare extends BoardSquare {
             
             StringBuilder a = new StringBuilder();
             for(MapToken e : Hoccupier){
-                a.append(e.getSymbol());
+                a.append(e.toString());
             }
             for(MapToken e : Moccupier){
-                a.append(e.getSymbol());
+                a.append(e.toString());
             }
             a.append(" ");
             return a.toString();
@@ -94,7 +94,7 @@ public class MapSquare extends BoardSquare {
             }
                 StringBuilder a = new StringBuilder();
                 for(MapToken e : occupier){
-                    a.append(" ").append(e.getSymbol()).append("  ");
+                    a.append(" ").append(e.toString()).append("  ");
                 }  
                 return a.toString();
 

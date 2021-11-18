@@ -152,6 +152,27 @@ public class WorldGame extends Game {
 //                    world.printMap();
                 }
             }
+            //check win here after an event.
+            int[] currentposition = party.getToken().getCoordinates();
+            if(party.isHero()){
+                if(currentposition[0] == 0){
+                    System.out.println("*********************\n");
+                    System.out.println("A hero has entered the Monster Nexus and destroyed it!!\n");
+                    System.out.println("Heros won the game!!!\n");
+                    System.out.println("*********************");
+                    return;
+                }
+            }else{
+                if(currentposition[0] ==7){
+                    System.out.println("*********************\n");
+                    System.out.println("Oh, no! A Monster has entered the Hero Nexus\n");
+                    System.out.println("Monsters now rule the world!!!\n");
+                    System.out.println("YOU LOSE!!!\n");
+                    System.out.println("*********************");
+                    return;
+                }
+            }
+
 
             // Next turn if:
             // Hero ends turn
@@ -164,7 +185,6 @@ public class WorldGame extends Game {
                 start = true;
             }
 
-            //check win condition
         }
     }
 
