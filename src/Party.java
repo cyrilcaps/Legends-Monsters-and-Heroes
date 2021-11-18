@@ -101,6 +101,7 @@ public class Party {
                     "I/i: show information/equip weapons and armor\n" +
                     "M/m: show map\n" +
                     "X/x: attack\n" +
+                    "C/c: cast spell\n" +
                     "P/p: use potion\n" +
                     "T/t: teleport\n" +
                     "B/b: back to nexus\n" +

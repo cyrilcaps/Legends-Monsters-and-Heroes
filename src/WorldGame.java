@@ -50,7 +50,8 @@ public class WorldGame extends Game {
                 // spawn monsters every 7 rounds and on start
                 if (turnBasedManager.getRound() == monsterRound) {
                     for (int i = 0; i < 3; i++) {
-                        Party monsterParty = new Party("M" + (i + 1), UtilPrintColors.RED_BOLD_BRIGHT);
+                        Party monsterParty = new Party("M" + ((turnBasedManager.getRound()/7 * 3) + i + 1),
+                                UtilPrintColors.RED_BOLD_BRIGHT);
                         monsterParty.setMonster(true);
                         monsterParty.addHero(CharacterFactory.generateMonster(1, 1).get(0));
                         monsterParty.setBehavior(new MapBehaviorMonster());
@@ -81,6 +82,7 @@ public class WorldGame extends Game {
 
             System.out.println("Turn = " + party.getToken() + " starting at (" +
                     party.getToken().getCoordinates()[0] + ", " + party.getToken().getCoordinates()[1] + ")");
+            System.out.println(party.getCharacter().toString());
 
             // get action
             ActionWorld action = party.move();
