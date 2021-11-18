@@ -105,10 +105,12 @@ public class WorldGame extends Game {
                                 party.setHasMoved(true);
                             }
                         }
-                        //add new buffs(doesn't matter moved or not)
-                        int[] newposition = party.getToken().getCoordinates();
-                        MapSquare newsquare = world.getMapSquare(newposition[0], newposition[1]);
-                        parties.get(party.getToken().getSymbol()).getCharacter().getStats().cellBuff(newsquare.getType());
+                        if(party.isHero()){
+                            //add new buffs(doesn't matter moved or not)
+                            int[] newposition = party.getToken().getCoordinates();
+                            MapSquare newsquare = world.getMapSquare(newposition[0], newposition[1]);
+                            parties.get(party.getToken().getSymbol()).getCharacter().getStats().cellBuff(newsquare.getType());
+                        }
                     } else {
                         System.out.println("You have already moved!");
                     }
