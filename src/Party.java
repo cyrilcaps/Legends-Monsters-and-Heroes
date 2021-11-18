@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Party {
@@ -80,7 +81,7 @@ public class Party {
         return (new ArrayList<>(heroes.values())).get(0);
     }
 
-    public ActionWorld move() {
+    public ActionWorld move(List<Party> partyList) {
         if (behavior != null) {
             return behavior.action(this);
         }
@@ -153,7 +154,7 @@ public class Party {
                     return new ActionWorld(ActionMapType.NONE, coordinates);
                 case("T"):
                     //Teleport
-                    EventTeleport teleport = new EventTeleport(this, token); //Menu for a user to teleport
+                    EventTeleport teleport = new EventTeleport(this, token, partyList); //Menu for a user to teleport
                     int row = teleport.getRow();
                     int col = teleport.getCol();
                     if (row != -1 && col != -1) {

@@ -85,7 +85,8 @@ public class WorldGame extends Game {
             System.out.println(party.getCharacter().toString());
 
             // get action
-            ActionWorld action = party.move();
+            // Pass all parties as input to check position of all heroes to teleport
+            ActionWorld action = party.move(this.partyList);
 
             // quit will exit play
             boolean valid = false;
