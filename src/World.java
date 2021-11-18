@@ -192,12 +192,19 @@ public class World {
             return false;
         }
         
+        MapSquare current = map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);
         MapSquare des = map.getBoardSquare(newRow, newCol);
 
         if (des.getType().equals(MapSquareType.INACCESSIBLE)) {
             System.out.println("Inaccessable position!");
             return false;
         }
+
+        //check if current square contains a monster/hero, if so, can't move forward.
+        if(current.isFull()){
+            return false;
+        }
+
 
         // check new square occupied by the same type of character
         if(des.isFull()){
