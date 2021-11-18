@@ -23,7 +23,7 @@ public class WorldGame extends Game {
     public void addMonster(Party party, int lane) {
         boolean valid = world.spawnTokenMonsterNexus(party.getToken(), lane);
         if (!valid) {
-            System.out.println("Could not add monster, monster nexus is full?");
+            System.out.println("Could not add monster, monster nexus is full!");
             return;
         }
         addParty(party);
@@ -211,18 +211,19 @@ public class WorldGame extends Game {
             for (int j = tokenY - range; j < tokenY + range; j++) {
                 MapSquare square = world.getMapSquare(i, j);
 
-                if (!square.getOccupier().isEmpty()) {
-                    String name = square.getOccupier().get(0).getSymbol();
-                    for (Character character : parties.get(name).getHeroes().values()) {
-                        if (getMonsters) {
-                            if (character instanceof CharacterMonster) {
-                                characters.add(character);
-                            }
-                        } else {
-                            if (character instanceof CharacterHero) {
-                                characters.add(character);
-                            }
+                if (!square.isEmpty()) {
+                    if(getMonsters){
+                        if(square.hasMonster()){
+                            String name = square.getMonster().get(0).getSymbol();
+                            characters.add(parties.get(name).getCharacter());
                         }
+
+                    }else{
+                        if(square.hasHero()){
+                            String name = square.getHero().get(0).getSymbol();
+                            characters.add(parties.get(name).getCharacter());
+                        }
+
                     }
                 }
             }

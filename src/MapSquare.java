@@ -65,6 +65,10 @@ public class MapSquare extends BoardSquare {
         return !Hoccupier.isEmpty() || !Moccupier.isEmpty();
     }
 
+    public boolean isEmpty(){
+        return Hoccupier.isEmpty() && Moccupier.isEmpty();
+    }
+
     @Override
     
     public String toString() {

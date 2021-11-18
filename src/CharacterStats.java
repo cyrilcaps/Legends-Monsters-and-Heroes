@@ -94,16 +94,16 @@ public class CharacterStats {
         return maxMana;
     }
 
-    public int getStrength() {
-        return strength;
+    public int getStrength() { 
+        return inKoulou ? (int)(strength*1.1) : strength;
     }
 
-    public int getAgility() {
-        return agility;
+    public int getAgility() { 
+        return inCave ? (int)(agility * 1.1) : agility;
     }
 
-    public int getDexterity() {
-        return dexterity;
+    public int getDexterity() { 
+        return inBush ? (int)(dexterity * 1.1 ) : dexterity;
     }
 
     public double getStrengthGrowth() {
