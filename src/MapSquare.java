@@ -82,6 +82,7 @@ public class MapSquare extends BoardSquare {
             for(MapToken e : Moccupier){
                 a.append(e.getSymbol());
             }
+            a.append(" ");
             return a.toString();
 
         }else if(isOccupied()){
