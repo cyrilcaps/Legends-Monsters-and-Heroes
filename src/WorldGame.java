@@ -156,6 +156,7 @@ public class WorldGame extends Game {
             int[] currentposition = party.getToken().getCoordinates();
             if(party.isHero()){
                 if(currentposition[0] == 0){
+                    world.printMap();
                     System.out.println("*********************\n");
                     System.out.println("A hero has entered the Monster Nexus and destroyed it!!\n");
                     System.out.println("Heros won the game!!!\n");
@@ -164,6 +165,7 @@ public class WorldGame extends Game {
                 }
             }else{
                 if(currentposition[0] ==7){
+                    world.printMap();
                     System.out.println("*********************\n");
                     System.out.println("Oh, no! A Monster has entered the Hero Nexus\n");
                     System.out.println("Monsters now rule the world!!!\n");
