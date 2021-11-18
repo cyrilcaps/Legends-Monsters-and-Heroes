@@ -105,6 +105,7 @@ public class WorldGame extends Game {
                                 MapSquare newsquare = world.getMapSquare(newposition[0], newposition[1]);
                                 parties.get(party.getToken().getSymbol()).getCharacter().getStats().cellBuff(newsquare.getType());
                             }
+                            
                         } else {
                             // invalid move for monster = done moving
                             if (!party.isHero()) {

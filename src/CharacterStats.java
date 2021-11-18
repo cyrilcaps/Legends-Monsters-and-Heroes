@@ -177,7 +177,8 @@ public class CharacterStats {
             case KOULOU:
                 inKoulou = true;
                 break;
-            default: break;
+            default: 
+                break;
 
         }
     }

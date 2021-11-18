@@ -15,7 +15,7 @@ public class World {
     }
 
     public MapSquare getMapSquare(int x, int y) {
-        if (x > 0 && x < size && y > 0 && y < size) {
+        if (x >= 0 && x < size && y >= 0 && y < size) {
             return map.getBoardSquare(x, y);
         }
         return null;
@@ -190,7 +190,6 @@ public class World {
         if(!map.isValid(newRow, newCol)) {
             System.out.println("invalid");
             return false;
-        }
         
         MapSquare current = map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);
         MapSquare des = map.getBoardSquare(newRow, newCol);
