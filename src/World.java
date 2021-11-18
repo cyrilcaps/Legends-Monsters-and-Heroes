@@ -190,6 +190,7 @@ public class World {
         if(!map.isValid(newRow, newCol)) {
             System.out.println("invalid");
             return false;
+        }
         
         MapSquare current = map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);
         MapSquare des = map.getBoardSquare(newRow, newCol);
