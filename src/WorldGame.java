@@ -226,6 +226,7 @@ public class WorldGame extends Game {
                 if (targetParty.getCharacter().getName().equals(target.getName())) {
                     // remove target from world if fainted
                     world.removeToken(targetParty.getToken());
+                    parties.remove(targetParty.getToken().getSymbol());
 
                     // reward party if character hero
                     if (party.getCharacter() instanceof CharacterHero) {

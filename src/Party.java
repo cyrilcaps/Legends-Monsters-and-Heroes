@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Party {
     private final Map<String, Character> heroes = new HashMap<>();
@@ -185,6 +186,19 @@ public class Party {
         for (Character hero : heroes.values()) {
             System.out.println(hero);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Party party = (Party) o;
+        return Objects.equals(token.getSymbol(), party.token.getSymbol());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(token);
     }
 
     @Override

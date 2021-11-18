@@ -50,6 +50,17 @@ public class TurnBasedManager<E> implements Iterator<E> {
         return teams.get(team).get(player);
     }
 
+    public void remove(E toRemove) {
+        for (int i = 0; i < teams.size(); i++) {
+            for (E member : teams.get(i)) {
+                if (member.equals(toRemove)) {
+                    teams.remove(i);
+                    return;
+                }
+            }
+        }
+    }
+
     public List<E> getTeam(int i) {
         return teams.get(i);
     }

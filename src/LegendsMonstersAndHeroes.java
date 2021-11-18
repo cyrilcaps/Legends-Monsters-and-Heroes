@@ -3,6 +3,9 @@ import java.util.stream.Collectors;
 
 public class LegendsMonstersAndHeroes {
     public static void start() {
+        // load data from files
+        DataLoader.loadAll();
+
         // welcome
         System.out.println("              />\n" +
                 " (           //------------------------------------------------------\\\n" +
