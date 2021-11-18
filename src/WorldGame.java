@@ -94,6 +94,8 @@ public class WorldGame extends Game {
                     break;
                 case MOVE:
                     if (!party.isHasMoved()) {
+                        //first remove the buff given by the previous cell
+                        parties.get(party.getToken().getSymbol()).getCharacter().getStats().removeBuffs();
                         valid = world.move(party.getToken(), action.getCoordinates()[0], action.getCoordinates()[1]);
                         if (valid) {
                             party.setHasMoved(true);
@@ -103,6 +105,10 @@ public class WorldGame extends Game {
                                 party.setHasMoved(true);
                             }
                         }
+                        //add new buffs(doesn't matter moved or not)
+                        int[] newposition = party.getToken().getCoordinates();
+                        MapSquare newsquare = world.getMapSquare(newposition[0], newposition[1]);
+                        parties.get(party.getToken().getSymbol()).getCharacter().getStats().cellBuff(newsquare.getType());
                     } else {
                         System.out.println("You have already moved!");
                     }
@@ -151,6 +157,8 @@ public class WorldGame extends Game {
                 party = turnBasedManager.next();
                 start = true;
             }
+
+            //check win condition
         }
     }
 

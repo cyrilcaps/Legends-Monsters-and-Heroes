@@ -166,7 +166,7 @@ public class CharacterStats {
         electrocute = false;
     }
 
-    public void cellBuffs(MapSquareType cell){
+    public void cellBuff(MapSquareType cell){
         switch(cell){
             case BUSH:
                 inBush = true;
