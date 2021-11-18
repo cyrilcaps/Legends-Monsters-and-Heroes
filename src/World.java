@@ -191,20 +191,49 @@ public class World {
             System.out.println("invalid");
             return false;
         }
-        
-        MapSquare current = map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]);
+        int[] currentposition = token.getCoordinates();
+        MapSquare current = map.getBoardSquare(currentposition[0], currentposition[1]);
         MapSquare des = map.getBoardSquare(newRow, newCol);
-
-        if (des.getType().equals(MapSquareType.INACCESSIBLE)) {
-            System.out.println("Inaccessable position!");
-            return false;
-        }
 
         //check if current square contains a monster/hero, if so, can't move forward.
         if(current.isFull()){
             return false;
         }
 
+        //check if the adjacent square contains a monster/hero, if so, can't move forward before killing.
+        
+        if(map.isValid(currentposition[0],currentposition[1]-1)){
+            MapSquare left = map.getBoardSquare(currentposition[0], currentposition[1]-1);
+            if(token.getSymbol().charAt(0)=='H'){
+                if(left.hasMonster()){
+                    return false;
+                }
+            }else{
+                if(left.hasHero()){
+                    return false;
+                }
+            }
+        }
+
+        if(map.isValid(currentposition[0],currentposition[1]+1)){
+            MapSquare right = map.getBoardSquare(currentposition[0], currentposition[1]+1);
+            if(token.getSymbol().charAt(0)=='H'){
+                if(right.hasMonster()){
+                    return false;
+                }
+            }else{
+                if(right.hasHero()){
+                    return false;
+                }
+            }
+        }
+
+        
+
+        if (des.getType().equals(MapSquareType.INACCESSIBLE)) {
+            System.out.println("Inaccessable position!");
+            return false;
+        }
 
         // check new square occupied by the same type of character
         if(des.isFull()){
