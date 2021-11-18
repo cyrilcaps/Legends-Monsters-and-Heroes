@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WorldGame extends Game {
     private final World world = new World(8);
@@ -63,9 +64,10 @@ public class WorldGame extends Game {
                 // heroes, start of round - respawn or recover
                 if (party.isHero()) {
                     if (party.getCharacter().isFainted()) {
+                        System.out.println("Respawning hero: " + party.getToken());
                         // perform back action for free
                         party.getCharacter().getStats().addHealth(party.getCharacter().getStats().getMaxHealth() / 2);
-                        world.spawnTokenHeroNexus(party.getToken(), 0);
+                        world.move(party.getToken(), 7, party.getToken().getCoordinates()[1]);
                     } else {
                         // recover some health/mana
                         ((CharacterHero) party.getCharacter()).recover();
@@ -76,6 +78,9 @@ public class WorldGame extends Game {
                 world.printMap();
             }
             start = false;
+
+            System.out.println("Turn = " + party.getToken() + " starting at (" +
+                    party.getToken().getCoordinates()[0] + ", " + party.getToken().getCoordinates()[1] + ")");
 
             // get action
             ActionWorld action = party.move();
@@ -164,14 +169,13 @@ public class WorldGame extends Game {
     }
 
     private void attack(Party party) {
-        List<Character> targets = getCharactersInRange(party.getToken(), party.isHero());
+        List<Party> parties = getCharactersInRange(party.getToken(), party.isHero());
+        List<Character> targets = parties.stream().map(Party::getCharacter).collect(Collectors.toList());
         if (canAttack(party, targets)) {
             // monster = attack first target, hero = use target selector
             Character target = targets.get(0);
             if (party.isHero()) {
                 target = CombatPlayer.targetSelector(targets);
-            } else {
-                party.setHasAttacked(true);
             }
 
             // apply damage to target
@@ -179,55 +183,74 @@ public class WorldGame extends Game {
                 party.setHasAttacked(true);
                 target.applyCombat(new ActionCombat(ActionCombatType.ATTACK,
                         party.getCharacter().getDamage(), target.getName()));
+
+                // remove fainted tokens
+                resolveFainted(party, parties, target);
             }
-        } else {
-            // set true to say no targets
+        }
+        if (!party.isHero()) {
             party.setHasAttacked(true);
         }
     }
 
     private void cast(Party party) {
-        List<Character> targets = getCharactersInRange(party.getToken(), party.isHero());
+        List<Party> parties = getCharactersInRange(party.getToken(), party.isHero());
+        List<Character> targets = parties.stream().map(Party::getCharacter).collect(Collectors.toList());
         if (canAttack(party, targets)) {
-            ActionCombat spellAction = (new CombatPlayer()).castSpell(
-                    getCharactersInRange(party.getToken(), party.isHero()),
-                    party.getCharacter());
+            ActionCombat spellAction = (new CombatPlayer()).castSpell(targets, party.getCharacter());
             if (spellAction != null) {
                 party.setHasAttacked(true);
+
+                // remove fainted tokens
+                resolveFainted(party, parties, spellAction.getTarget());
             }
-        } else {
-            // set true to say no targets
-            party.setHasAttacked(true);
         }
     }
 
-    private List<Character> getCharactersInRange(MapToken token, boolean getMonsters) {
-        List<Character> characters = new ArrayList<>();
+    private void resolveFainted(Party party, List<Party> targetParties, Character target) {
+        if (target.isFainted()) {
+            for (Party targetParty : targetParties) {
+                if (targetParty.getCharacter().getName().equals(target.getName())) {
+                    // remove target from world if fainted
+                    world.removeToken(targetParty.getToken());
+
+                    // reward party if character hero
+                    if (party.getCharacter() instanceof CharacterHero) {
+                        party.getCharacter().endCombat(target.getLevel().getLevel() * 100, 2);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private List<Party> getCharactersInRange(MapToken token, boolean getMonsters) {
+        List<Party> parties = new ArrayList<>();
 
         int range = 1;
         int tokenX = token.getCoordinates()[0];
-        int tokenY = token.getCoordinates()[0];
-        for (int i = tokenX - range ; i < tokenX + range; i++) {
-            for (int j = tokenY - range; j < tokenY + range; j++) {
+        int tokenY = token.getCoordinates()[1];
+        for (int i = tokenX - range ; i < tokenX + range + 1; i++) {
+            for (int j = tokenY - range; j < tokenY + range + 1; j++) {
                 MapSquare square = world.getMapSquare(i, j);
 
-                if (!square.isEmpty()) {
+                if (square != null && !square.isEmpty()) {
                     if(getMonsters){
                         if(square.hasMonster()){
                             String name = square.getMonster().get(0).getSymbol();
-                            characters.add(parties.get(name).getCharacter());
+                            parties.add(this.parties.get(name));
                         }
 
                     }else{
                         if(square.hasHero()){
                             String name = square.getHero().get(0).getSymbol();
-                            characters.add(parties.get(name).getCharacter());
+                            parties.add(this.parties.get(name));
                         }
 
                     }
                 }
             }
         }
-        return characters;
+        return parties;
     }
 }

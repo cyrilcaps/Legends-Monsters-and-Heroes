@@ -7,6 +7,16 @@ public class CharacterMonster extends Character {
         this.type = type;
     }
 
+    public CharacterMonster(CharacterMonster monster) {
+        super(monster.getName(), monster.getLevel(), null, null, monster.getStats());
+        this.type = monster.getType();
+
+    }
+
+    public CharacterMonsterType getType() {
+        return type;
+    }
+
     @Override
     public int getDamage() {
         int totalDamage = getStats().getDamage();

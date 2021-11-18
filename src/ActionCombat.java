@@ -3,6 +3,7 @@ public class ActionCombat {
     private int damage;
     private int manaCost;
     private String targetName;
+    private Character target;
     // effect object
     // target - list<players>
 
@@ -46,6 +47,14 @@ public class ActionCombat {
 
     public void setTargetName(String targetName) {
         this.targetName = targetName;
+    }
+
+    public Character getTarget() {
+        return target;
+    }
+
+    public void setTarget(Character target) {
+        this.target = target;
     }
 
     @Override

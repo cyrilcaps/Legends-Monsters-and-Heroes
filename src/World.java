@@ -15,7 +15,10 @@ public class World {
     }
 
     public MapSquare getMapSquare(int x, int y) {
-        return map.getBoardSquare(x, y);
+        if (x > 0 && x < size && y > 0 && y < size) {
+            return map.getBoardSquare(x, y);
+        }
+        return null;
     }
 
     // randomly populate map using weights
@@ -167,7 +170,6 @@ public class World {
     public boolean spawnTokenMonsterNexus(MapToken token, int lane) {
         int row = 0;
         int col = lane * 3 + (int) (Math.random() * 2);
-        System.out.println(row + ", " + col + " " + token.getSymbol());
         boolean valid = move(token, row, col);
         if (valid) {
             token.getCoordinates()[0] = row;
@@ -220,10 +222,16 @@ public class World {
                 .unoccupy(token);
         map.getBoardSquare(newRow, newCol)
                 .occupy(token);
-        token.setCoordinates(new int[]{newRow, newCol});
+        token.getCoordinates()[0] = newRow;
+        token.getCoordinates()[1] = newCol;
 
         // determine event
         return true;
+    }
+
+    public void removeToken(MapToken token) {
+        map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1])
+                .unoccupy(token);
     }
 
     // print map

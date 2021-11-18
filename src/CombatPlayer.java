@@ -75,6 +75,7 @@ public class CombatPlayer implements CombatBehavior {
         action.setDamage(spell.getDamage(character.getStats().getDexterity()));
         action.setManaCost(spell.getManaCost());
         action.setTargetName(target.getName());
+        action.setTarget(target);
 
         // cast spell on target
         spell.cast(character, target);

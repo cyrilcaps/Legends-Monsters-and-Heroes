@@ -185,4 +185,18 @@ public class Party {
             System.out.println(hero);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Party{" +
+                "heroes=" + heroes +
+                ", token=" + token +
+                ", monster=" + monster +
+                ", behavior=" + behavior +
+                ", hasMoved=" + hasMoved +
+                ", hasAttacked=" + hasAttacked +
+                ", combats=" + combats +
+                ", wins=" + wins +
+                '}';
+    }
 }
