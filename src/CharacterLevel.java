@@ -45,7 +45,8 @@ public class CharacterLevel {
     public void levelUp() {
         level += 1;
         experience -= nextLevel;
-        nextLevel = nextLevel + calculateNextLevel();
+        //Changed formula to scale appropriately (Level 1: need 10 xp, level 2: need 20 xp, etc.)
+        nextLevel = calculateNextLevel();
     }
 
     public int processExperience() {
