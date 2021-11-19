@@ -2,8 +2,15 @@
 
 ## Student Info
 * Name: Cyril Caparanga
-* Email: cyrilc@bu.edu
+*       Luke Staib
+*       Kangning Zhang
+* Email: cyrilcljstaib@bu.edu 
+*        ljstaib@bu.edu 
+*        katzhang@bu.edu
+*        
 * BU ID: U32526192
+*        U
+*        U31078191
 
 ## Compilation and Execution Instruction
 Developed in Windows environment using IntelliJ IDE.
@@ -13,7 +20,7 @@ Developed in Windows environment using IntelliJ IDE.
 ```
 
 ## Specifications
-Using the provided specifications and configuration files.
+Using the provided specifications and configuration files.             
 
 ## Bonuses
 ### Design Patterns
