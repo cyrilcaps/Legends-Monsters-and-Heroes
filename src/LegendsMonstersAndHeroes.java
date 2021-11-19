@@ -67,12 +67,21 @@ public class LegendsMonstersAndHeroes {
         System.out.println("\n************************************\n");
         System.out.println("Thank you for playing!");
         System.out.println("The world will remember the heroic efforts of your party:");
-        //TODO: Fix stats
-        //System.out.println("\tYou were victorious in " + party.getWins() + " out of " + party.getCombats() + " battles.");
-//        for (CharacterHero character : party.getHeroes().values()) {
-//            System.out.println("\t" + Util.colorString(character.getType().getStringColor(), character.getName()
-//                    + " " + character.getType().name() + " Lvl " + character.getLevel().getLevel()));
-//        }
+        CharacterHero character;
+        boolean pluralFlag = true;
+        for (int i = 0; i < partyCount; i++) {
+            System.out.println("Hero " + (i + 1) + ": ");
+            character = (CharacterHero) heroParties.get(i).getCharacter();
+            System.out.println("\t" + Util.colorString(character.getType().getStringColor(), character.getName()
+                    + " " + character.getType().name() + " Lvl " + character.getLevel().getLevel()));
+            if (heroParties.get(i).getWins() == 1) {
+                pluralFlag = false;
+            }
+            System.out.print("\tYou defeated " + heroParties.get(i).getWins() + " monster");
+            if (pluralFlag) { System.out.print("s"); }
+            System.out.println(".");
+            pluralFlag = true;
+        }
     }
 
     private static CharacterHero heroSelector() {

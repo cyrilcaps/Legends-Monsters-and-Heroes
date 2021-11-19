@@ -255,6 +255,11 @@ public class WorldGame extends Game {
 
                     // reward party if character hero
                     if (party.getCharacter() instanceof CharacterHero) {
+                        //Add 1 win
+                        System.out.println("Win added");
+                        party.addWin();
+
+                        //Reward the lone hero
                         party.getCharacter().endCombat(target.getLevel().getLevel() * 100, 2);
                     }
                     break;
