@@ -10,6 +10,9 @@ public class WorldGame extends Game {
     public WorldGame() {
     }
 
+    public World getWorld() {
+        return world;
+    }
 
     public void addParty(Party party) {
         partyList.add(party);
@@ -30,8 +33,8 @@ public class WorldGame extends Game {
         addParty(party);
     }
 
-    @Override
-    public void play() {
+    //Took away override to pass map, need to see which tiles have been explored for teleport to work
+    public void play(Board<MapSquare> map) {
         for (Party value : partyList) {
             List<Party> oneHeroParty = new ArrayList<>();
             oneHeroParty.add(value);
@@ -86,7 +89,7 @@ public class WorldGame extends Game {
 
             // get action
             // Pass all parties as input to check position of all heroes to teleport
-            ActionWorld action = party.move(this.partyList);
+            ActionWorld action = party.move(map);
 
             // quit will exit play
             boolean valid = false;

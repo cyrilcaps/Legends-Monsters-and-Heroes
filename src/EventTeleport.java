@@ -3,17 +3,15 @@ import java.util.List;
 public class EventTeleport extends Event {
     private int row;
     private int col;
-    private final MapToken tokenIn; //Token of the hero that is teleporting
     private final Party party;
-    private final List<Party> partyList;
+    private final Board<MapSquare> map; //Get the map to retrieve information about if that tile has been explored
 
-    public EventTeleport(Party party, MapToken currentToken, List<Party> partyList) {
+    public EventTeleport(Party party, Board<MapSquare> map) {
         //Default -1: unchanged if teleport is not valid
         this.row = -1;
         this.col = -1;
-        this.tokenIn = currentToken;
         this.party = party; //The hero attempting to teleport
-        this.partyList = partyList; //All heroes (to get their positions)
+        this.map = map; //The map used to determine if the square that a user is attempting to teleport has been visited
         enter(party);
     }
 
@@ -33,14 +31,11 @@ public class EventTeleport extends Event {
         this.col = col;
     }
 
-    public MapToken getTokenIn() { return tokenIn; }
+    public Board<MapSquare> getMap() { return map; }
 
     public Party getParty() { return party; }
 
-    public List<Party> getPartyList() { return partyList; }
-
     public void enter(Party party) {
-        //Character character = party.getHeroes().get(party.getHeroes().keySet().toArray()[0]);
         //Instructions
         System.out.println("To teleport, please enter a row and a column.\nRows are listed from top to bottom:" +
                 "\n\t-Row 1 is at the top of the map\n\t-Row 8 is at the bottom\nColumns are listed from left to right:" +
@@ -91,40 +86,10 @@ public class EventTeleport extends Event {
 
     public void checkTP(int row_num, int col_num) {
         //Check if move is valid, check if space is inaccessible -> already done in World.java
-        boolean validTP = true;
+        boolean validTP;
 
-        //Check if a hero is able to teleport there (based on position of all heroes)
-        //TODO - Previous hero positions before using back
-        //Store row and column of position of other 2 heroes (that are not currently trying to teleport)
-        int[][] otherHeroPositions = new int[2][2];
-        int idx = 0;
-        //Should be at least 6 parties (3 heroes and at least 3 monsters)
-        for (int i = 0; i < this.getPartyList().size(); i++) {
-            if (this.getPartyList().get(i).isHero()) { //Should be 3 heroes
-                if (this.getPartyList().get(i).getHeroes() != this.getParty().getHeroes()) { //2 other hero positions
-                    otherHeroPositions[idx] = this.getPartyList().get(i).getToken().getCoordinates();
-                    idx++;
-                }
-            }
-        }
-
-        if (col_num != (otherHeroPositions[0][1] + 1) && col_num != (otherHeroPositions[1][1] + 1)) {
-            //If column does not match where a hero is, reject
-            validTP = false;
-        }
-
-        if (col_num == (otherHeroPositions[0][1] + 1)) {
-            if (row_num < (otherHeroPositions[0][0] + 1)) {
-                //If row is less than where 1st hero is (ex: hero 2 is in row 3 and hero 1 teleports to row 2), reject
-                validTP = false;
-            }
-        }
-        else if (col_num == (otherHeroPositions[1][1] + 1)) {
-            if (row_num < (otherHeroPositions[1][0] + 1)) {
-                //If row is less than where 2nd hero is, reject
-                validTP = false;
-            }
-        }
+        //Check based on if that square has been visited by another hero
+        validTP = this.map.getBoardSquare(row_num - 1, col_num - 1).getExplored();
 
         //If valid, save to data members to be retrieved
         if (validTP) {

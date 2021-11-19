@@ -39,6 +39,10 @@ public class Board <T extends BoardSquare> {
         board.get(x).set(y, square);
     }
 
+    public void setBoardSquareExplored(int x, int y, boolean explored) {
+        board.get(x).get(y).setExplored(explored);
+    }
+
     public boolean isValid(int row, int col) {
         return row < size && row >= 0 && col < size && col >= 0;
     }

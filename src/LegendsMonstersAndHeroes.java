@@ -59,7 +59,9 @@ public class LegendsMonstersAndHeroes {
         for (Party heroParty : heroParties) {
             game.addHero(heroParty, lane++);
         }
-        game.play();
+        Board<MapSquare> map = game.getWorld().getMap();
+        //Passing map in order to teleport
+        game.play(map);
 
         // good bye message
         System.out.println("\n************************************\n");

@@ -81,7 +81,7 @@ public class Party {
         return (new ArrayList<>(heroes.values())).get(0);
     }
 
-    public ActionWorld move(List<Party> partyList) {
+    public ActionWorld move(Board<MapSquare> map) {
         if (behavior != null) {
             return behavior.action(this);
         }
@@ -113,15 +113,27 @@ public class Party {
             switch (input.toUpperCase()) {
                 case ("W"):
                     coordinates = new int[]{token.getCoordinates()[0] - 1, token.getCoordinates()[1]};
+                    if (!map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]).getExplored()) {
+                        map.setBoardSquareExplored(token.getCoordinates()[0], token.getCoordinates()[1], true);
+                    }
                     return new ActionWorld(ActionMapType.MOVE, coordinates);
                 case ("A"):
                     coordinates = new int[]{token.getCoordinates()[0], token.getCoordinates()[1] - 1};
+                    if (!map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]).getExplored()) {
+                        map.setBoardSquareExplored(token.getCoordinates()[0], token.getCoordinates()[1], true);
+                    }
                     return new ActionWorld(ActionMapType.MOVE, coordinates);
                 case ("S"):
                     coordinates = new int[]{token.getCoordinates()[0] + 1, token.getCoordinates()[1]};
+                    if (!map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]).getExplored()) {
+                        map.setBoardSquareExplored(token.getCoordinates()[0], token.getCoordinates()[1], true);
+                    }
                     return new ActionWorld(ActionMapType.MOVE, coordinates);
                 case ("D"):
                     coordinates = new int[]{token.getCoordinates()[0], token.getCoordinates()[1] + 1};
+                    if (!map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]).getExplored()) {
+                        map.setBoardSquareExplored(token.getCoordinates()[0], token.getCoordinates()[1], true);
+                    }
                     return new ActionWorld(ActionMapType.MOVE, coordinates);
                 case ("Q"):
                     coordinates = new int[2];
@@ -154,12 +166,15 @@ public class Party {
                     return new ActionWorld(ActionMapType.NONE, coordinates);
                 case("T"):
                     //Teleport
-                    EventTeleport teleport = new EventTeleport(this, token, partyList); //Menu for a user to teleport
+                    EventTeleport teleport = new EventTeleport(this, map); //Menu for a user to teleport
                     int row = teleport.getRow();
                     int col = teleport.getCol();
                     if (row != -1 && col != -1) {
                         System.out.println("Teleport was successful!");
                         coordinates = new int[]{row - 1, col - 1};
+                        if (!map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]).getExplored()) {
+                            map.setBoardSquareExplored(token.getCoordinates()[0], token.getCoordinates()[1], true);
+                        }
                         return new ActionWorld(ActionMapType.MOVE, coordinates);
                     }
                     else {
@@ -171,6 +186,9 @@ public class Party {
                     //Back to nexus (for now, to the bottom of the map)
                     if (token.getCoordinates()[0] != 7) {
                         coordinates = new int[]{7, token.getCoordinates()[1]};
+                        if (!map.getBoardSquare(token.getCoordinates()[0], token.getCoordinates()[1]).getExplored()) {
+                            map.setBoardSquareExplored(token.getCoordinates()[0], token.getCoordinates()[1], true);
+                        }
                         return new ActionWorld(ActionMapType.MOVE, coordinates);
                     }
                     else {

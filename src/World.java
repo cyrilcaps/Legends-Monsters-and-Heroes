@@ -14,6 +14,10 @@ public class World {
         populateMap();
     }
 
+    public Board<MapSquare> getMap() {
+        return map;
+    }
+
     public MapSquare getMapSquare(int x, int y) {
         if (x >= 0 && x < size && y >= 0 && y < size) {
             return map.getBoardSquare(x, y);
