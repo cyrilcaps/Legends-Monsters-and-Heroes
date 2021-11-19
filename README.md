@@ -1,16 +1,18 @@
 # Legends-Monsters-and-Heroes
 
 ## Student Info
-* Name: Cyril Caparanga
-*       Luke Staib
-*       Kangning Zhang
-* Email: cyrilcljstaib@bu.edu 
-*        ljstaib@bu.edu 
-*        katzhang@bu.edu
-*        
-* BU ID: U32526192
-*        U
-*        U31078191
+* Names: 
+  * Cyril Caparanga 
+  * Luke Staib 
+  * Kangning Zhang
+* Emails: 
+  * cyrilc@bu.edu 
+  * ljstaib@bu.edu 
+  * katzhang@bu.edu   
+* BU IDs: 
+  * Cyril - U32526192 
+  * Luke - U39863533 
+  * Kangning - U31078191
 
 ## Compilation and Execution Instruction
 Developed in Windows environment using IntelliJ IDE.
