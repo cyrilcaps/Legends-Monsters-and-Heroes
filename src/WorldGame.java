@@ -3,7 +3,7 @@ import java.util.stream.Collectors;
 
 public class WorldGame extends Game {
     private final World world = new World(8);
-    private final List<Party> partyList = new ArrayList<>();
+    private final List<Party> heroPartyList = new ArrayList<>();
     private final Map<String, Party> parties = new HashMap<>();
     private final TurnBasedManager<Party> turnBasedManager = new TurnBasedManager<>();
 
@@ -15,12 +15,12 @@ public class WorldGame extends Game {
     }
 
     public void addParty(Party party) {
-        partyList.add(party);
         parties.put(party.getToken().getSymbol(), party);
     }
 
     public void addHero(Party party, int lane) {
         world.spawnTokenHeroNexus(party.getToken(), lane);
+        heroPartyList.add(party);
         addParty(party);
     }
 
@@ -35,7 +35,7 @@ public class WorldGame extends Game {
 
     //Took away override to pass map, need to see which tiles have been explored for teleport to work
     public void play(Board<MapSquare> map) {
-        for (Party value : partyList) {
+        for (Party value : heroPartyList) {
             List<Party> oneHeroParty = new ArrayList<>();
             oneHeroParty.add(value);
             turnBasedManager.addTeam(oneHeroParty);
@@ -52,11 +52,17 @@ public class WorldGame extends Game {
             if (start) {
                 // spawn monsters every 7 rounds and on start
                 if (turnBasedManager.getRound() == monsterRound) {
+                    int averageLevel = 0;
+                    for (Party heroParty : heroPartyList) {
+                        averageLevel += heroParty.getCharacter().getLevel().getLevel();
+                    }
+                    averageLevel = averageLevel / heroPartyList.size();
+
                     for (int i = 0; i < 3; i++) {
                         Party monsterParty = new Party("M" + ((turnBasedManager.getRound()/7 * 3) + i + 1),
                                 UtilPrintColors.RED_BOLD_BRIGHT);
                         monsterParty.setMonster(true);
-                        monsterParty.addHero(CharacterFactory.generateMonster(1, 1).get(0));
+                        monsterParty.addHero(CharacterFactory.generateMonster(averageLevel, 1).get(0));
                         monsterParty.setBehavior(new MapBehaviorMonster());
                         addMonster(monsterParty, i);
 
