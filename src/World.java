@@ -285,7 +285,7 @@ public class World {
                 if(count ==0 || count == 2){
                     for(int j = 0; j < size; j++){
                         String symbol = map.getBoardSquare(i, j).getType().getSymbol();
-                        rowbuild.append(" "+symbol+"-").append(symbol+"-").append(symbol+"  ");
+                        rowbuild.append(" "+symbol+"-").append(symbol+"-").append(symbol+"-").append(symbol+"  ");
 
                     }
                 }else{

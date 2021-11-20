@@ -40,6 +40,9 @@ public class MapToken {
 
     @Override
     public String toString() {
+        if(symbol.length()<3){
+            return color + symbol + UtilPrintColors.RESET+" ";
+        }
         return color + symbol + UtilPrintColors.RESET;
     }
 }

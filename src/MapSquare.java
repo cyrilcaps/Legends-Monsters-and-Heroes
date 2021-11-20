@@ -94,15 +94,15 @@ public class MapSquare extends BoardSquare {
             }
                 StringBuilder a = new StringBuilder();
                 for(MapToken e : occupier){
-                    a.append(" ").append(e.toString()).append("  ");
+                    a.append(" ").append(e.toString()).append("   ");
                 }  
                 return a.toString();
 
             }else if(type.equals(MapSquareType.INACCESSIBLE)){
-            return "XXXXX";
+            return "XXXXXXX";
         }
 
-        return "     ";
+        return "       ";
     
     }
 }
