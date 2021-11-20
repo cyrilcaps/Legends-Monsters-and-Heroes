@@ -155,7 +155,9 @@ public class WorldGame extends Game {
 
                 // enter event if exists
                 if (event != null) {
-                    event.enter(party);
+                    if (party.isHero()) {
+                        event.enter(party);
+                    }
 
                     // print location
 //                    world.printMap();
