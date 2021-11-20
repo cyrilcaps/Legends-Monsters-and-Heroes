@@ -71,7 +71,10 @@ Using the provided specifications and configuration files.
 * Event: World event
 * EventCombat: Combat event, party will enter into combat versus monsters
 * EventFactory: Generates event based on where party is on the world map
+* EventInfo: generates information about what happens/status of the hero
+* EventPotion: event of hero consuming a potion
 * EventShop: Shop event, party will enter a shop with random items
+* EventTeleport: the event where a hero teleport to a different lane
 * EventType: Enum for event types - combat or shop
 * Game: Based class for a game
 * GlobalData: Static data store of loaded config files
