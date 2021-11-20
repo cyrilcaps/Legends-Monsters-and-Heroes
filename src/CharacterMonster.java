@@ -8,9 +8,8 @@ public class CharacterMonster extends Character {
     }
 
     public CharacterMonster(CharacterMonster monster) {
-        super(monster.getName(), monster.getLevel(), null, null, monster.getStats());
+        super(monster);
         this.type = monster.getType();
-
     }
 
     public CharacterMonsterType getType() {

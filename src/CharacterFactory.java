@@ -63,9 +63,14 @@ public class CharacterFactory {
         List<Character> monsters = new ArrayList<>();
         IntStream.range(0, numMonsters).forEach(i -> {
             while (true) {
-                // create deep copy
+                // TODO: create deep copy
                 CharacterMonster monster = new CharacterMonster(GlobalData.getRandom(GlobalData.getMonsters()));
                 if (monster.getLevel().getLevel() <= averageLevel) {
+                    // Set HP back to max if necessary
+                    // Prevents glitch with monsters with 0 HP spawning
+                    if (monster.getStats().getHealth() != monster.getLevel().getLevel() * 100) {
+                        monster.getStats().setHealth(monster.getLevel().getLevel() * 100);
+                    }
                     monsters.add(monster);
                     break;
                 }

@@ -20,6 +20,16 @@ public abstract class Character {
         this.stats = stats;
     }
 
+    //Needed for a deep copy?
+    public Character(Character character) {
+        this.name = character.getName();
+        this.level = character.getLevel();
+        this.currency = character.getCurrency();
+        this.equipment = character.getEquipment();
+        this.stats = character.getStats();
+        this.combatBehavior = character.combatBehavior;
+    }
+
     /*
     Getter/Setter
      */
@@ -69,7 +79,7 @@ public abstract class Character {
 
     public ActionCombat action(List<Character> characters) {
         if (isFainted()) {
-            return new ActionCombat(ActionCombatType.NONE, 0, null);
+            return new ActionCombat(ActionCombatType.NONE, 0, (String) null);
         }
         return combatBehavior.action(characters, this);
     }

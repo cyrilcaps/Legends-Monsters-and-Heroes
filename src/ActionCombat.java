@@ -17,6 +17,13 @@ public class ActionCombat {
         this.targetName = targetName;
     }
 
+    public ActionCombat(ActionCombatType type, int damage, Character target) {
+        this.type = type;
+        this.damage = damage;
+        this.target = target;
+        this.targetName = target.getName();
+    }
+
     public ActionCombatType getType() {
         return type;
     }

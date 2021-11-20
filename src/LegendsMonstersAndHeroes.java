@@ -63,7 +63,7 @@ public class LegendsMonstersAndHeroes {
         //Passing map in order to teleport
         game.play(map);
 
-        // good bye message
+        //Stats message
         System.out.println("\n************************************\n");
         System.out.println("Thank you for playing!");
         System.out.println("The world will remember the heroic efforts of your party:");

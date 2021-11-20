@@ -162,7 +162,7 @@ public class WorldGame extends Game {
                     world.printMap();
                     System.out.println("*********************\n");
                     System.out.println("A hero has entered the Monster Nexus and destroyed it!!\n");
-                    System.out.println("Heros won the game!!!\n");
+                    System.out.println("Heroes won the game!!!\n");
                     System.out.println("*********************");
                     return;
                 }
@@ -220,8 +220,10 @@ public class WorldGame extends Game {
             // apply damage to target
             if (target != null) {
                 party.setHasAttacked(true);
+                //Changed to target instead of target.getName(), prevents attacking every monster with the same name bug
+                //Ex: M1 and M3 named "Blinky", both would get damaged
                 target.applyCombat(new ActionCombat(ActionCombatType.ATTACK,
-                        party.getCharacter().getDamage(), target.getName()));
+                        party.getCharacter().getDamage(), target));
 
                 // remove fainted tokens
                 resolveFainted(party, parties, target);
@@ -256,7 +258,7 @@ public class WorldGame extends Game {
                     // reward party if character hero
                     if (party.getCharacter() instanceof CharacterHero) {
                         //Add 1 win
-                        System.out.println("Win added");
+                        //System.out.println("Win added");
                         party.addWin();
 
                         //Reward the lone hero
