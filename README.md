@@ -3,8 +3,8 @@
 ## Student Info
 * Names: 
   * Cyril Caparanga 
-  * Luke Staib 
-  * Kangning Zhang
+   Luke Staib 
+   Kangning Zhang
 * Emails: 
   * cyrilc@bu.edu 
   * ljstaib@bu.edu 
