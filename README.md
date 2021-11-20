@@ -1,4 +1,4 @@
-# Legends-Monsters-and-Heroes
+# Legends-of-Valor
 
 ## Student Info
 * Names: 
@@ -26,8 +26,6 @@ Using the provided specifications and configuration files.
 
 ## Bonuses
 ### Design Patterns
-* Strategy Pattern
-  * CombatBehavior <- CombatRandom, CombatPlayer
 * Factory Pattern
   * EventFactory
   * CharacterFactory
@@ -84,6 +82,8 @@ Using the provided specifications and configuration files.
 * ItemWeapon: Equipable weapon for heroes
 * LegendsMonstersAndHeroes: Entry point for game, does set-up for player
 * Main: Program entry point, will start LegendsMonstersAndHeroes 
+* MapBehavior: Interface for party behavior on the board/map
+* MapBehaviorMonster: Implementation of monster behavior on board/map
 * MapSquare: Extends board square, allows grid square to act as a map location
 * MapSquareType: Enum for different map locations
 * MapToken: Object representing where Player's party is on the map
