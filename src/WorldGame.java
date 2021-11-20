@@ -168,7 +168,7 @@ public class WorldGame extends Game {
             if(party.isHero()){
                 if(currentposition[0] == 0){
                     world.printMap();
-                    String win = "[]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[]\n"
+                    String win = "[]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[]\n"
                                 + "L  Y       Y               \\|/                                                        L\n"
                                 + "E  Y       Y             ---*---                           __ __                      E\n"
                                 + "G  Y       Y               /|\\                            /  V  \\                     G\n"
@@ -181,7 +181,7 @@ public class WorldGame extends Game {
                                 + "K      H       O    O    U     U            W   W W   W      II   N       N           K\n"
                                 + "T      H       O    O    \\\\   //             W W   W W       II   N       N           T\n"
                                 + "T      H       OEEEEO     +===+               W     W        II   N       N           T\n"
-                                + "[]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[]";
+                                + "[]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[]";
                     System.out.println(win);
                     
                     System.out.println("A hero has entered the Monster Nexus and destroyed it!!\n");
