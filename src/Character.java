@@ -18,15 +18,17 @@ public abstract class Character {
         this.currency = currency;
         this.equipment = equipment;
         this.stats = stats;
+        getStats().setHealth(level.getLevel() * 100);
+        getStats().setMaxHealth(level.getLevel() * 100);
     }
 
-    //Needed for a deep copy?
+    //Needed for a deep copy
     public Character(Character character) {
         this.name = character.getName();
         this.level = character.getLevel();
         this.currency = character.getCurrency();
         this.equipment = character.getEquipment();
-        this.stats = character.getStats();
+        this.stats = new CharacterStats(character.getStats());
         this.combatBehavior = character.combatBehavior;
     }
 

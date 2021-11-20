@@ -38,6 +38,16 @@ public class CharacterStats {
         this.damageReduction = damageReduction;
     }
 
+    // needed for deep copy
+    public CharacterStats(CharacterStats other) {
+        this.strength = other.getStrength();
+        this.agility = other.getAgility();
+        this.dexterity = other.getDexterity();
+        this.damage = other.getDamage();
+        this.dodgeChance = other.getDodgeChance();
+        this.damageReduction = other.getDamageReduction();
+    }
+
     public void setHealth(int health) {
         this.health = health;
     }
