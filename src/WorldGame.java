@@ -168,7 +168,22 @@ public class WorldGame extends Game {
             if(party.isHero()){
                 if(currentposition[0] == 0){
                     world.printMap();
-                    System.out.println("********************************************************\n");
+                    String win = "[]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[]\n"
+                                + "L  Y       Y               \\|/                                                        L\n"
+                                + "E  Y       Y             ---*---                           __ __                      E\n"
+                                + "G  Y       Y               /|\\                            /  V  \\                     G\n"
+                                + "E  \\\\     //                                              \\     /                     E\n"
+                                + "N   \\\\   //                                                \\   /                      N\n"
+                                + "D    \\ _ /                                                  \\_/                       D\n"
+                                + "S      H       OTTTTO    U     U         w               W        N  ____             S\n"
+                                + "C      H       O    O    U     U          W             W    II   N//    \\\\           C\n"
+                                + "L      H       O    O    U     U           W     Y     W     II   N       N           L\n"
+                                + "K      H       O    O    U     U            W   W W   W      II   N       N           K\n"
+                                + "T      H       O    O    \\\\   //             W W   W W       II   N       N           T\n"
+                                + "T      H       OEEEEO     +===+               W     W        II   N       N           T\n"
+                                + "[]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[]";
+                    System.out.println(win);
+                    
                     System.out.println("A hero has entered the Monster Nexus and destroyed it!!\n");
                     System.out.println("Heroes won the game!!!\n");
                     System.out.println("********************************************************");
