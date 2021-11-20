@@ -34,7 +34,7 @@ Using the provided specifications and configuration files.
 
 ### Miscellaneous
 * Added console colors (Used black background during testing): hero types, monster types, spell types, world map
-* ASCII art for in welcome page and for combat/market events.
+* ASCII art for in welcome page, for combat/market events and for player winning the game.
 
 ## Class Descriptions
 * ActionCombat: Object for a character's action during combat (i.e. an attack)
