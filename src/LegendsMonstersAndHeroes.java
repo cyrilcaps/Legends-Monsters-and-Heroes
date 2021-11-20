@@ -3,10 +3,13 @@ import java.util.stream.Collectors;
 
 public class LegendsMonstersAndHeroes {
     public static void start() {
+        // load data from files
+        DataLoader.loadAll();
+
         // welcome
         System.out.println("              />\n" +
                 " (           //------------------------------------------------------\\\n" +
-                "(*)OXOXOXOXO(*>             LEGENDS: MONSTERS AND HEROES              \\\n" +
+                "(*)OXOXOXOXO(*>             LEGENDS OF VALOR                          \\\n" +
                 " (           \\\\------------------------------------------------------/\n" +
                 "              \\>");
         System.out.println("Welcome! Please set-up your party.");
