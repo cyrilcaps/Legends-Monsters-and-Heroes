@@ -17,6 +17,7 @@
 ## Compilation and Execution Instruction
 Developed in Windows environment using IntelliJ IDE.
 ```
+> cd scr
 > javac *.java
 > java Main
 ```
