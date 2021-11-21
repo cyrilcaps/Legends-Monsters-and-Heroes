@@ -29,7 +29,7 @@ Using the provided specifications and configuration files.
 * Factory Pattern
   * EventFactory
   * CharacterFactory
-* Iterator Patter
+* Iterator Pattern
   * TurnBasedManager
 
 ### Miscellaneous
@@ -71,7 +71,7 @@ Using the provided specifications and configuration files.
 * Event: World event
 * EventCombat: Combat event, party will enter into combat versus monsters
 * EventFactory: Generates event based on where party is on the world map
-* EventInfo: generates information about what happens/status of the hero
+* EventInfo: Generates information about status of the hero and allows a hero to equip weapons/armor
 * EventPotion: event of hero consuming a potion
 * EventShop: Shop event, party will enter a shop with random items
 * EventTeleport: the event where a hero teleport to a different lane
