@@ -236,8 +236,8 @@ public class CharacterStats {
     // process stats based on strength, agility, dexterity
     public void processSecondaryStats() {
         damage = (int) (strength * 0.05);
-        dodgeChance = agility * 0.002;
-        damageReduction = (int) (dexterity * 0.05);
+        dodgeChance = agility * 0.001;
+        damageReduction = (int) (dexterity * 0.01);
     }
 
     public void takeDamage(int damage) {
