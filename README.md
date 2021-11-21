@@ -20,7 +20,6 @@ Developed in Windows environment using IntelliJ IDE.
 1. Navigate to the ``src`` directory
 2. Enter the following commands:
 ```
-> cd scr
 > javac *.java
 > java Main
 ```
