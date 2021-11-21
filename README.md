@@ -16,6 +16,9 @@
 
 ## Compilation and Execution Instruction
 Developed in Windows environment using IntelliJ IDE.
+
+1. Navigate to the ``src`` directory
+2. Enter the following commands:
 ```
 > javac *.java
 > java Main
