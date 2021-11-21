@@ -73,14 +73,27 @@ public class WorldGame extends Game {
 
                 // heroes, start of round - respawn or recover
                 if (party.isHero()) {
-                    if (party.getCharacter().isFainted()) {
-                        System.out.println("Respawning hero: " + party.getToken());
-                        // perform back action for free
-                        party.getCharacter().getStats().addHealth(party.getCharacter().getStats().getMaxHealth() / 2);
-                        world.move(party.getToken(), 7, party.getToken().getCoordinates()[1]);
-                    } else {
+                    if (!party.getCharacter().isFainted()) {
                         // recover some health/mana
                         ((CharacterHero) party.getCharacter()).recover();
+                    }
+                }
+
+                if (turnBasedManager.isStartRound()) {
+                    boolean respawn = false;
+
+                    // respawn all heroes
+                    for (Party heroParty : heroPartyList) {
+                        if (heroParty.getCharacter().isFainted()) {
+                            respawn = true;
+                            System.out.println("\nRespawning hero: " + heroParty.getToken());
+                            // perform back action for free
+                            heroParty.getCharacter().getStats().addHealth(heroParty.getCharacter().getStats().getMaxHealth() / 2);
+                            world.move(heroParty.getToken(), 7, heroParty.getToken().getCoordinates()[1]);
+                        }
+                    }
+                    if (respawn) {
+                        Input.getString("Press any key to continue...");
                     }
                 }
 

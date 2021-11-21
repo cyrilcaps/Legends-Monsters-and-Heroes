@@ -63,6 +63,7 @@ public class CharacterHero extends Character {
             System.out.println(getName() + " received " + damage + " damage");
             if (isFainted()) {
                 System.out.println(getName() + " fainted!");
+                Input.getString("Press any key to continue...");
             }
         }
     }
